@@ -1,0 +1,213 @@
+@extends('partials.dashboardLayout')
+
+@section('content')
+    <div class="container-fluid py-4">
+        <div class="card">
+            <div class="card-header pb-0 p-3">
+                <div class="row">
+                    <div class="col-6 d-flex align-items-center">
+                        <h5 class="mb-0">Pegawai</h5>
+                    </div>
+                    <div class="col-6 text-end">
+                        <button class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" data-bs-target="#createModal">
+                            <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Pegawai Baru
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+                <div class="table-responsive">
+                    <table class="table pegawai align-items-center mb-0">
+                        <thead>
+                        <tr>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                No
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                NIP
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Aksi
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($pegawai as $index => $item)
+                            <tr>
+                                <td class="text-center">{{ $index + 1 }}</td>
+                                <td>{{ $item->nama }}</td>
+                                <td class="text-center">{{ $item->nip_nik }}</td>
+                                <td>{{ $item->email }}</td>
+                                <td class="text-center">
+                                    {{--                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}">Edit</button>--}}
+                                    <form action="{{ route('pegawai.destroy', $item->id) }}" method="POST"
+                                          class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <i class="fas fa-trash-alt ms-auto text-danger cursor-pointer"
+                                           onclick="return confirm('Are you sure?')"></i>
+                                    </form>
+{{--                                    <span class="edit" data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}">--}}
+{{--                                        <i class="fas fa-pencil-alt ms-4 text-dark cursor-pointer"--}}
+{{--                                           data-bs-toggle="tooltip" data-bs-placement="top"></i>--}}
+{{--                                    </span>--}}
+
+                                    <a href="{{ route('pegawai.update', $item->id) }}" class="edit" data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}">
+                                        <i class="fas fa-pencil-alt ms-4 text-dark cursor-pointer"
+                                           data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"></i>
+                                    </a>
+
+                                </td>
+                            </tr>
+
+                            <!-- Edit Modal -->
+                            <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+                                        <form action="{{ route('pegawai.update', $item->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalLabel">Edit Pegawai</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body row">
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="nama" class="form-label">Nama</label>
+                                                        <input type="text" name="nama" class="form-control"
+                                                               value="{{ $item->nama }}" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="nip_nik" class="form-label">NIP</label>
+                                                        <input type="text" name="nip_nik" class="form-control"
+                                                               value="{{ $item->nip_nik }}" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="email" class="form-label">Email</label>
+                                                        <input type="email" name="email" class="form-control"
+                                                               value="{{ $item->email }}" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="idJabatanPegawai" class="form-label">Jabatan
+                                                            Pegawai</label>
+                                                        <input type="text" name="jabatan_pegawai_id"
+                                                               class="form-control"
+                                                               value="{{ $item->jabatan_pegawai_id }}" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="bank" class="form-label">Bank</label>
+                                                        <input type="text" name="bank" class="form-control"
+                                                               value="{{ $item->bank }}" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="namaRek" class="form-label">Nama Pemilik
+                                                            Rekening</label>
+                                                        <input type="text" name="namaRek" class="form-control"
+                                                               value="{{ $item->namaRek }}" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="noRek" class="form-label">Nomor Rekening</label>
+                                                        <input type="text" name="noRek" class="form-control"
+                                                               value="{{ $item->noRek }}" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="golongan_id" class="form-label">Golongan</label>
+                                                        <input type="text" name="golongan_id" class="form-control"
+                                                               value="{{ $item->golongan_id }}" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="submit" class="btn btn-info">Save Changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Modal -->
+        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('pegawai.store') }}" method="POST">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createModalLabel">Add Pegawai</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body row">
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label for="nama" class="form-label">Nama</label>
+                                    <input type="text" name="nama" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nip_nik" class="form-label">NIP</label>
+                                    <input type="text" name="nip_nik" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" name="email" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="idJabatanPegawai" class="form-label">Jabatan Pegawai</label>
+                                    <input type="text" name="jabatan_pegawai_id" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label for="bank" class="form-label">Bank</label>
+                                    <input type="text" name="bank" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="namaRek" class="form-label">Nama Pemilik Rekening</label>
+                                    <input type="text" name="namaRek" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="noRek" class="form-label">Nomor Rekening</label>
+                                    <input type="text" name="noRek" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="golongan_id" class="form-label">Golongan</label>
+                                    <input type="text" name="golongan_id" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
