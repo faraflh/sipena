@@ -69,11 +69,6 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown-item">
-                            <a class="nav-link {{ request()->routeIs('jabatan-pegawai') ? 'active' : '' }}" href="{{ route('jabatan-pegawai') }}">
-                                <span class="nav-link-text ms-1">Jabatan Pegawai</span>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown-item">
                             <a class="nav-link{{ request()->routeIs('jabatan-pegawai') ? 'active' : '' }}" href="{{ route('jabatan-pegawai') }}">
                                 <span class="nav-link-text ms-1">Jabatan Status</span>
                             </a>
@@ -91,11 +86,6 @@
                         <li class="nav-item dropdown-item">
                             <a class="nav-link{{ request()->routeIs('alur.index') ? 'active' : '' }}" href="{{ route('alur.index') }}">
                                 <span class="nav-link-text ms-1">Alur</span>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown-item">
-                            <a class="nav-link{{ request()->routeIs('jabatan-pegawai') ? 'active' : '' }}" href="{{ route('jabatan-pegawai') }}">
-                                <span class="nav-link-text ms-1">Golongan</span>
                             </a>
                         </li>
                         <li class="nav-item dropdown-item">

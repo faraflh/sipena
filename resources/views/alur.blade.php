@@ -56,43 +56,44 @@
 
                                 </td>
                             </tr>
+                            <!-- Edit Modal -->
+                            <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1"
+                                 aria-labelledby="editModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form method="POST" action="{{ route('alur.update', $item->id) }}">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalLabel">Edit Alur</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="namaAlur{{ $item->id }}" class="form-label">Nama Alur</label>
+                                                    <input type="text" id="namaAlur{{ $item->id }}" name="namaAlur" class="form-control" value="{{ $item->namaAlur }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Cancel
+                                                </button>
+                                                <button type="submit" class="btn btn-info">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-
-        <!-- Edit Modal -->
-        <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1" aria-labelledby="editModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form method="POST" action="{{ route('alur.update', $item->id) }}">
-                        @csrf
-                        @method('PUT')
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">Edit Alur</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="namaAlur{{ $item->id }}" class="form-label">Nama Alur</label>
-                                <input type="text" id="namaAlur{{ $item->id }}" name="namaAlur" class="form-control"
-                                       value="{{ $item->namaAlur }}" required>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-info">Save</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        @endforeach
 
         <!-- Create Modal -->
         <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">

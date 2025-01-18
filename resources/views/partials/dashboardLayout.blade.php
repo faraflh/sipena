@@ -26,8 +26,8 @@
     <div class="container-fluid py-4">
         @yield('content')
     </div>
-    @include('partials.dbFooter')
 </main>
+    @include('partials.dbFooter')
 
 <!-- Core JS Files -->
 <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>

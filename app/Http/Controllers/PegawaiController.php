@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PegawaiController extends Controller
 {
     public function index()
     {
-        $pegawai = Pegawai::with(['golongan', 'jabatanPegawai'])->get();
+        $pegawai = Pegawai::with(['golongan', 'jabatanPegawai'])->paginate(5); // Paginate 5 items per page
         return view('pegawai', compact('pegawai'));
     }
+
 
     public function store(Request $request)
     {

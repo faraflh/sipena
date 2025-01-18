@@ -34,18 +34,18 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
 
-        $nipNik = $request->nip_nik;
+        $credential = $request->nip_nik;
         $password = $request->password;
 
-        // Find the user associated with the provided nip_nik
-        $user = User::whereHas('pegawai', function ($query) use ($nipNik) {
-            $query->where('nip_nik', $nipNik);
+        // Find the user associated with the provided nip_nik or email
+        $user = User::whereHas('pegawai', function ($query) use ($credential) {
+            $query->where('nip_nik', $credential)->orWhere('email', $credential);
         })->first();
 
         if ($user && Auth::attempt(['id' => $user->id, 'password' => $password])) {
             return redirect()->to('/dashboard');
         } else {
-            return redirect()->route('login')->with('error', 'Email or password is incorrect');
+            return redirect()->route('login')->with('error', 'NIP/NIK, Email, or password is incorrect');
         }
     }
 

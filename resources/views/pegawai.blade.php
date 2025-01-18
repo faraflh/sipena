@@ -20,36 +20,30 @@
                     <table class="table pegawai align-items-center mb-0">
                         <thead>
                         <tr>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                No
-                            </th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama
-                            </th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                NIP
-                            </th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email
-                            </th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                Aksi
-                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">NIP</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($pegawai as $index => $item)
                             <tr>
-                                <td class="text-center">{{ $index + 1 }}</td>
+                                <td class="text-center">{{ ($pegawai->currentPage() - 1) * $pegawai->perPage() + $loop->iteration }}</td>
                                 <td>{{ $item->nama }}</td>
                                 <td class="text-center">{{ $item->nip_nik }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td class="text-center">
-                                    {{--                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}">Edit</button>--}}
-                                    <form action="{{ route('pegawai.destroy', $item->id) }}" method="POST"
-                                          class="d-inline">
+                                    <i class="fas fa-trash-alt ms-auto text-danger cursor-pointer"
+                                       data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
+                                       onclick="event.preventDefault(); document.getElementById('delete-form-{{ $item->id }}').submit();"></i>
+
+                                    <form id="delete-form-{{ $item->id }}"
+                                          action="{{ route('pegawai.destroy', $item->id) }}" method="POST"
+                                          style="display: none;">
                                         @csrf
                                         @method('DELETE')
-                                        <i class="fas fa-trash-alt ms-auto text-danger cursor-pointer"
-                                           onclick="return confirm('Are you sure?')"></i>
                                     </form>
 {{--                                    <span class="edit" data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}">--}}
 {{--                                        <i class="fas fa-pencil-alt ms-4 text-dark cursor-pointer"--}}
@@ -149,6 +143,10 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-baseline">
+                <p class="text-xs font-weight-bold mb-0">Showing {{ $pegawai->firstItem() }} to {{ $pegawai->lastItem() }} of {{ $pegawai->total() }} entries</p>
+                {{ $pegawai->links('pagination::bootstrap-5') }}
             </div>
         </div>
 
