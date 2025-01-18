@@ -15,7 +15,7 @@ class DokumenController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'idKategori' => 'required|exists:kategori,id',
+            '' => 'required|exists:kategori,id',
             'idAlur' => 'required|exists:alur,id',
             'jenisDokumen' => 'required|string|max:100',
         ]);

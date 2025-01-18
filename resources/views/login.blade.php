@@ -63,12 +63,12 @@
                 </div>
                 <div class="container" data-aos="fade-up" data-aos-delay="100">
                     <div class="form-container row g-2">
-                        <div class="col-lg-12" style="width: 500px; height: 320px;">
+                        <div class="col-lg-12 equal-height" style="width: 500px;">
                             <div class="info-item d-flex flex-column justify-content-center aos-init aos-animate equal-height" data-aos="fade-up" data-aos-delay="200">
-                                <h4>Sistem Informasi Pengelolaan Administrasi</h4>
+                                <h3>Sistem Informasi Pengelolaan Administrasi</h3>
                             </div>
                         </div>
-                        <div class="login col-lg-12" style="width: 500px; height:320px;">
+                        <div class="login col-lg-12 equal-height" style="width: 500px;">
                             <div class="info-item d-flex flex-column justify-content-center equal-height">
                                 @if(session('error'))
                                     <div class="alert alert-danger">
@@ -121,6 +121,24 @@
 
 <!-- Main JS File -->
 <script src="{{ asset('main_assets/js/main.js') }}"></script>
+<script>
+    window.onload = function () {
+        const items = document.querySelectorAll('.equal-height');
+        let maxHeight = 0;
+
+        items.forEach(item => {
+            const height = item.offsetHeight;
+            if (height > maxHeight) {
+                maxHeight = height;
+            }
+        });
+
+        items.forEach(item => {
+            item.style.height = maxHeight + 'px';
+        });
+    };
+</script>
+
 </body>
 
 </html>

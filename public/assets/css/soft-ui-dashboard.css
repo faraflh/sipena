@@ -4,6 +4,24 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+ .form-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dua kolom dengan lebar sama */
+    align-items: stretch; /* Pastikan elemen meregang sesuai tinggi terbesar */
+    gap: 20px; /* Jarak antar kolom */
+}
+
+.equal-height {
+    display: flex; /* Tambahkan jika elemen dalamnya menggunakan Flexbox */
+    flex-direction: column; /* Tetap vertikal */
+    height: auto !important;
+    min-height: 100% !important;
+}
+.info-item {
+    border: 2px dashed red; /* Membantu melihat tinggi elemen */
+    background-color: rgba(0, 255, 0, 0.1); /* Warna transparan untuk debugging */
+}
+
 :root {
     --bs-blue: #63B3ED;
     --bs-indigo: #596CFF;

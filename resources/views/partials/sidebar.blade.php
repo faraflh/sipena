@@ -99,7 +99,7 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown-item">
-                            <a class="nav-link{{ request()->routeIs('jabatan-pegawai') ? 'active' : '' }}" href="{{ route('jabatan-pegawai') }}">
+                            <a class="nav-link{{ request()->routeIs('dokumen.index') ? 'active' : '' }}" href="{{ route('dokumen.index') }}">
                                 <span class="nav-link-text ms-1">Dokumen</span>
                             </a>
                         </li>

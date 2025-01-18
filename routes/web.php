@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\PermohonanController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,10 +34,12 @@ Route::get('/settings', function () {return view('dashboard');})->name('settings
 Route::get('/alur', function () {return view('alur');})->name('alur');
 Route::get('/kategori', function () {return view('kategori');})->name('kategori');
 Route::get('/pegawai', function () {return view('pegawai');})->name('pegawai');
+Route::get('/dokumen', function () {return view('dokumen');})->name('dokumen');
 //Route::resource('/pegawai', PegawaiController::class);
 Route::resource('pegawai', PegawaiController::class);
 Route::resource('alur', AlurController::class);
 Route::resource('kategori', KategoriController::class);
+Route::resource('dokumen', DokumenController::class);
 
 
 Route::get('/', [PageController::class, 'index'])->name('home');
