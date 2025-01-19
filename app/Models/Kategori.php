@@ -15,11 +15,11 @@ class Kategori extends Model
 
     public function dokumen()
     {
-        return $this->hasMany(Dokumen::class, 'idKategori');
+        return $this->hasMany(Dokumen::class);
     }
 
     public function jabatanKegiatan()
     {
-        return $this->hasMany(JabatanKegiatan::class, 'idKategori');
+        return $this->hasMany(JabatanKegiatan::class);
     }
 }

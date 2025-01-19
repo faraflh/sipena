@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AlurController;
+use App\Http\Controllers\DokumenController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PegawaiController;
@@ -34,6 +36,8 @@ Route::get('/pegawai', function () {return view('pegawai');})->name('pegawai');
 //Route::resource('/pegawai', PegawaiController::class);
 Route::resource('pegawai', PegawaiController::class);
 Route::resource('alur', AlurController::class);
+Route::resource('kategori', KategoriController::class);
+Route::resource('dokumen', DokumenController::class);
 
 
 Route::get('/', [PageController::class, 'index'])->name('home');

@@ -51,55 +51,55 @@
 
 <!-- Main Content -->
 <main class="main">
-{{--    @section('content')--}}
-        <section id="hero" class="hero section" style="display: flex; align-items: center; justify-content: center;">
-            <div class="hero-bg">
-                <img src="{{ asset('main_assets/img/hero-bg-light.webp') }}" alt="">
+    {{--    @section('content')--}}
+    <section id="hero" class="hero section" style="display: flex; align-items: center; justify-content: center;">
+        <div class="hero-bg">
+            <img src="{{ asset('main_assets/img/hero-bg-light.webp') }}" alt="">
+        </div>
+        <section id="contact" class="contact section" style="padding: 0 0 40px 0;">
+            <div class="container section-title" data-aos="fade-up">
+                <h2>LOGIN</h2>
+                <p>Silakan Login Disini</p>
             </div>
-            <section id="contact" class="contact section" style="padding: 0 0 40px 0;">
-                <div class="container section-title" data-aos="fade-up">
-                    <h2>LOGIN</h2>
-                    <p>Silakan Login Disini</p>
-                </div>
-                <div class="container" data-aos="fade-up" data-aos-delay="100">
-                    <div class="form-container row g-2">
-                        <div class="col-lg-12" style="width: 500px;">
-                            <div class="info-item d-flex flex-column justify-content-center aos-init aos-animate equal-height" data-aos="fade-up" data-aos-delay="200">
-                                <h4>Sistem Informasi Pengelolaan Administrasi</h4>
-                            </div>
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                <div class="form-container row g-2">
+                    <div class="col-lg-12 equal-height" style="width: 500px;">
+                        <div class="info-item d-flex flex-column justify-content-center aos-init aos-animate equal-height" data-aos="fade-up" data-aos-delay="200">
+                            <h3>Sistem Informasi Pengelolaan Administrasi</h3>
                         </div>
-                        <div class="login col-lg-12" style="width: 500px;">
-                            <div class="info-item d-flex flex-column justify-content-center equal-height">
-                                @if(session('error'))
-                                    <div class="alert alert-danger">
-                                        <b>Waduh!</b> {{ session('error') }}
-                                    </div>
-                                @endif
-                                <form action="{{ route('actionLogin') }}" method="post" style="display: flex; flex-direction: column; align-items: center;">
-                                    @csrf
-{{--                                    <input type="hidden" name="_token" value="P4rsXRGc3jzsPv9Sk7FgkrkOvonDDvFEdx9JesfD" autocomplete="off">--}}
-                                    <div class="form-group" style="width: 100%;">
-                                        <label for="username">Username</label>
-                                        <input type="text" class="form-control" id="username" name="nip_nik" placeholder="Enter Username">
-                                    </div>
-                                    <div class="form-group" style="width: 100%;">
-                                        <label for="password">Password</label>
-                                        <input type="password" class="form-control" id="password" name="password"
-                                               placeholder="Enter Password">
-                                    </div>
-                                    <div class="checkbox" style="width: 100%; display: flex; align-items: center;">
-                                        <input type="checkbox" id="remember" name="remember">
-                                        <label for="remember" style="margin-left: 5px;">Remember Me</label>
-                                    </div>
-                                    <button type="submit" class="button col-2" style="margin-top: 15px;">Login</button>
-                                </form>
-                            </div>
+                    </div>
+                    <div class="login col-lg-12 equal-height" style="width: 500px;">
+                        <div class="info-item d-flex flex-column justify-content-center equal-height">
+                            @if(session('error'))
+                                <div class="alert alert-danger">
+                                    <b>Waduh!</b> {{ session('error') }}
+                                </div>
+                            @endif
+                            <form action="{{ route('actionLogin') }}" method="post" style="display: flex; flex-direction: column; align-items: center;">
+                                @csrf
+                                {{--                                    <input type="hidden" name="_token" value="P4rsXRGc3jzsPv9Sk7FgkrkOvonDDvFEdx9JesfD" autocomplete="off">--}}
+                                <div class="form-group" style="width: 100%;">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" name="nip_nik" placeholder="Enter Username">
+                                </div>
+                                <div class="form-group" style="width: 100%;">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password"
+                                           placeholder="Enter Password">
+                                </div>
+                                <div class="checkbox" style="width: 100%; display: flex; align-items: center;">
+                                    <input type="checkbox" id="remember" name="remember">
+                                    <label for="remember" style="margin-left: 5px;">Remember Me</label>
+                                </div>
+                                <button type="submit" class="button col-2" style="margin-top: 15px;">Login</button>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </section>
-{{--    @endsection--}}
+    </section>
+    {{--    @endsection--}}
 </main>
 
 <!-- Footer -->
@@ -121,6 +121,24 @@
 
 <!-- Main JS File -->
 <script src="{{ asset('main_assets/js/main.js') }}"></script>
+<script>
+    window.onload = function () {
+        const items = document.querySelectorAll('.equal-height');
+        let maxHeight = 0;
+
+        items.forEach(item => {
+            const height = item.offsetHeight;
+            if (height > maxHeight) {
+                maxHeight = height;
+            }
+        });
+
+        items.forEach(item => {
+            item.style.height = maxHeight + 'px';
+        });
+    };
+</script>
+
 </body>
 
 </html>

@@ -69,27 +69,27 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown-item">
-                            <a class="nav-link{{ request()->routeIs('jabatan-pegawai') ? 'active' : '' }}" href="{{ route('jabatan-pegawai') }}">
+                            <a class="nav-link {{ request()->routeIs('jabatan-pegawai') ? 'active' : '' }}" href="{{ route('jabatan-pegawai') }}">
                                 <span class="nav-link-text ms-1">Jabatan Status</span>
                             </a>
                         </li>
                         <li class="nav-item dropdown-item">
-                            <a class="nav-link{{ request()->routeIs('jabatan-pegawai') ? 'active' : '' }}" href="{{ route('jabatan-pegawai') }}">
+                            <a class="nav-link {{ request()->routeIs('jabatan-pegawai') ? 'active' : '' }}" href="{{ route('jabatan-pegawai') }}">
                                 <span class="nav-link-text ms-1">DPA</span>
                             </a>
                         </li>
                         <li class="nav-item dropdown-item">
-                            <a class="nav-link{{ request()->routeIs('jabatan-pegawai') ? 'active' : '' }}" href="{{ route('jabatan-pegawai') }}">
+                            <a class="nav-link {{ request()->routeIs('kategori.index') ? 'active' : '' }}" href="{{ route('kategori.index') }}">
                                 <span class="nav-link-text ms-1">Kategori</span>
                             </a>
                         </li>
                         <li class="nav-item dropdown-item">
-                            <a class="nav-link{{ request()->routeIs('alur.index') ? 'active' : '' }}" href="{{ route('alur.index') }}">
+                            <a class="nav-link {{ request()->routeIs('alur.index') ? 'active' : '' }}" href="{{ route('alur.index') }}">
                                 <span class="nav-link-text ms-1">Alur</span>
                             </a>
                         </li>
                         <li class="nav-item dropdown-item">
-                            <a class="nav-link{{ request()->routeIs('jabatan-pegawai') ? 'active' : '' }}" href="{{ route('jabatan-pegawai') }}">
+                            <a class="nav-link {{ request()->routeIs('dokumen.index') ? 'active' : '' }}" href="{{ route('dokumen.index') }}">
                                 <span class="nav-link-text ms-1">Dokumen</span>
                             </a>
                         </li>

@@ -10,18 +10,18 @@ class JabatanKegiatan extends Model
     use HasFactory;
 
     protected $fillable = [
-        'idPegawai',
-        'idKategori',
+        'pegawai_id',
+        'kategori_id',
         'jabStatus',
     ];
 
     public function pegawai()
     {
-        return $this->belongsTo(Pegawai::class, 'idPegawai');
+        return $this->belongsTo(Pegawai::class);
     }
 
     public function kategori()
     {
-        return $this->belongsTo(Kategori::class, 'idKategori');
+        return $this->belongsTo(Kategori::class,);
     }
 }
