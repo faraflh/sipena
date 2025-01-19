@@ -17,7 +17,6 @@ class LoginController extends Controller
         }
     }
 
-    // Handle login action
     public function actionLogin(Request $request)
     {
 //        $credentials = [
@@ -37,7 +36,6 @@ class LoginController extends Controller
         $nipNik = $request->nip_nik;
         $password = $request->password;
 
-        // Find the user associated with the provided nip_nik
         $user = User::whereHas('pegawai', function ($query) use ($nipNik) {
             $query->where('nip_nik', $nipNik);
         })->first();
@@ -51,12 +49,10 @@ class LoginController extends Controller
 
     public function creds()
     {
-        // Get the currently logged-in user
         $user = Auth::user();
 
         $pegawai = $user->pegawai;
 
-        // Pass both user and pegawai data to the view
         return view('dashboard', [
             'user' => $user,
             'pegawai' => $pegawai,
@@ -65,8 +61,8 @@ class LoginController extends Controller
 
     public function logout()
     {
-        Auth::logout(); // Menghapus sesi pengguna
+        Auth::logout();
 
-        return redirect()->route('login')->with('success', 'Berhasil keluar.'); // Redirect ke halaman login dengan pesan sukses
+        return redirect()->route('login')->with('success', 'Berhasil keluar.');
     }
 }

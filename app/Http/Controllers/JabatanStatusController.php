@@ -9,7 +9,9 @@ class JabatanStatusController extends Controller
 {
     public function index()
     {
-        return response()->json(JabatanStatus::all());
+        $jabatanStatus = JabatanStatus::all();
+
+        return view('jabatanStatus', compact('jabatanStatus'));
     }
 
     public function store(Request $request)
@@ -18,26 +20,24 @@ class JabatanStatusController extends Controller
             'namaJabatanStatus' => 'required|string|max:30',
         ]);
 
-        $jabatanStatus = JabatanStatus::create($request->all());
-        return response()->json($jabatanStatus, 201);
-    }
-
-    public function show($id)
-    {
-        $jabatanStatus = JabatanStatus::findOrFail($id);
-        return response()->json($jabatanStatus);
+        JabatanStatus::create($request->all());
+        return redirect()->route('jabatanStatus.index')->with('success', 'Jabatan Status created successfully.');
     }
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'namaJabatanStatus' => 'required|string|max:30',
+        ]);
+
         $jabatanStatus = JabatanStatus::findOrFail($id);
         $jabatanStatus->update($request->all());
-        return response()->json($jabatanStatus);
+        return redirect()->route('jabatanStatus.index')->with('success', 'Jabatan Status updated successfully.');
     }
 
     public function destroy($id)
     {
         JabatanStatus::destroy($id);
-        return response()->json(['message' => 'Deleted successfully']);
+        return redirect()->route('jabatanStatus.index')->with('success', 'Jabatan Status deleted successfully.');
     }
 }

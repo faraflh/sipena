@@ -7,11 +7,13 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('alurs', function (Blueprint $table) {
-            $table->id();
-            $table->string('namaAlur', 30);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('alurs')) {
+            Schema::create('alurs', function (Blueprint $table) {
+                $table->id();
+                $table->string('namaAlur', 30);
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void
