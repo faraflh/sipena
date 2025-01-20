@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Golongan;
+use App\Models\JabatanPegawai;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +13,14 @@ class PegawaiController extends Controller
     public function index()
     {
         $pegawai = Pegawai::with(['golongan', 'jabatanPegawai'])->paginate(5); // Paginate 5 items per page
-        return view('pegawai', compact('pegawai'));
+        $golongan = Golongan::all();
+        $jabatanPegawai = JabatanPegawai::all();
+        return view('pegawai', [
+            'pegawai' => $pegawai,
+            'golongan' => $golongan,
+            'jabatanPegawai' => $jabatanPegawai,
+            'currentPage' => 'Pegawai', 
+        ]);
     }
 
 

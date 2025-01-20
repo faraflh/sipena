@@ -22,7 +22,7 @@ class PermohonanController extends Controller
             'nomor_telepon' => ['required', 'max:15'],
             'nama_opd' => ['required'],
             'nama_aplikasi' => ['required'],
-            'email' => ['required', 'email', 'max:254'],
+            'email' => ['required', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@riau\.go\.id$/', 'max:254'],
         ]);
 
 //        return Permohonan::create($data);

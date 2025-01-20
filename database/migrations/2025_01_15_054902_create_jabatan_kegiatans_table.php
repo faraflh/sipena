@@ -2,6 +2,7 @@
 
 use App\Models\Kategori;
 use App\Models\Pegawai;
+use App\Models\JabatanStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ return new class extends Migration {
 //            $table->unsignedBigInteger('idKategori');
             $table->foreignIdFor(Pegawai::class);
             $table->foreignIdFor(Kategori::class);
-            $table->string('jabStatus', 255);
+            $table->foreignIdFor(JabatanStatus::class);
             $table->timestamps();
 
 //            $table->foreign('idPegawai')->references('id')->on('pegawais')->onDelete('cascade');

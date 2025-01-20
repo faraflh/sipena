@@ -15,6 +15,8 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 
     <!-- Vendor CSS Files -->
     <link href="{{ asset('main_assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -63,12 +65,12 @@
                 </div>
                 <div class="container" data-aos="fade-up" data-aos-delay="100">
                     <div class="form-container row g-2">
-                        <div class="col-lg-12" style="width: 500px;">
+                        <div class="col-lg-12 equal-height" style="width: 500px;">
                             <div class="info-item d-flex flex-column justify-content-center aos-init aos-animate equal-height" data-aos="fade-up" data-aos-delay="200">
-                                <h4>Sistem Informasi Pengelolaan Administrasi</h4>
+                                <h3>Sistem Informasi Pengelolaan Administrasi</h3>
                             </div>
                         </div>
-                        <div class="login col-lg-12" style="width: 500px;">
+                        <div class="login col-lg-12 equal-height" style="width: 500px;">
                             <div class="info-item d-flex flex-column justify-content-center equal-height">
                                 @if(session('error'))
                                     <div class="alert alert-danger">
@@ -82,10 +84,12 @@
                                         <label for="username">Username</label>
                                         <input type="text" class="form-control" id="username" name="nip_nik" placeholder="Enter Username">
                                     </div>
-                                    <div class="form-group" style="width: 100%;">
+                                    <div class="form-group" style="width: 100%; position: relative;">
                                         <label for="password">Password</label>
-                                        <input type="password" class="form-control" id="password" name="password"
-                                               placeholder="Enter Password">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" style="padding-right: 40px; height: 50px;">
+                                        <button class="btn" type="button" id="togglePassword" style="position: absolute; right: 10px; top: 74%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
+                                            <i class="fa fa-eye-slash" id="toggleIcon"></i>
+                                        </button>
                                     </div>
                                     <div class="checkbox" style="width: 100%; display: flex; align-items: center;">
                                         <input type="checkbox" id="remember" name="remember">
@@ -121,6 +125,40 @@
 
 <!-- Main JS File -->
 <script src="{{ asset('main_assets/js/main.js') }}"></script>
+<script>
+    window.onload = function () {
+        const items = document.querySelectorAll('.equal-height');
+        let maxHeight = 0;
+
+        items.forEach(item => {
+            const height = item.offsetHeight;
+            if (height > maxHeight) {
+                maxHeight = height;
+            }
+        });
+
+        items.forEach(item => {
+            item.style.height = maxHeight + 'px';
+        });
+    };
+
+    document.getElementById('togglePassword').addEventListener('click', function () {
+    const passwordField = document.getElementById('password');
+    const toggleIcon = this.querySelector('i');
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+    } else {
+        passwordField.type = 'password';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+    }
+});
+
+
+</script>
+
 </body>
 
 </html>

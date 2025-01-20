@@ -11,8 +11,11 @@ class AlurController extends Controller
     {
         $alur = Alur::all();
 
-        // Pass the data to the view
-        return view('alur', compact('alur'));    }
+        return view('alur', [
+            'alur' => $alur,
+            'currentPage' => 'Alur', 
+        ]);
+    }
 
     public function store(Request $request)
     {

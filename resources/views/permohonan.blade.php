@@ -116,15 +116,35 @@
                                         <div class="form-group">
                                             <label for="email">Email</label><span> *</span>
                                             <input type="email" class="form-control" id="email" name="email"
-                                                   placeholder="Masukkan Email" required>
+                                                   placeholder="Masukkan Email" required oninput="validateEmail()">
                                             <small id="emailHelp" class="form-text text-muted">gunakan email dengan
                                                 format <b>example@riau.go.id</b></small>
+                                                <small id="emailError" class="text-danger" style="display: none;"> Email harus menggunakan domain @riau.go.id.</small>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <button type="submit" class="button col-2" >Kirim</button>
+                                    <button type="submit" class="button col-2" id="submitButton" disabled>Kirim</button>
                                 </div>
+
+                                <script>
+                                    function validateEmail() {
+                                        const emailField = document.getElementById('email');
+                                        const emailError = document.getElementById('emailError');
+                                        const submitButton = document.getElementById('submitButton');
+                                        const emailValue = emailField.value;
+                                        
+                                        const emailRegex = /^[a-zA-Z0-9._%+-]+@riau\.go\.id$/;
+
+                                        if (emailRegex.test(emailValue)) {
+                                            emailError.style.display = 'none';
+                                            submitButton.disabled = false;   
+                                        } else {
+                                            emailError.style.display = 'block'; 
+                                            submitButton.disabled = true;
+                                        }
+                                    }
+                                </script>
                             </form>
                         </div>
                     </div>

@@ -12,4 +12,9 @@ class JabatanStatus extends Model
     protected $fillable = [
         'namaJabatanStatus',
     ];
+
+    public function jabatanKegiatan()
+    {
+        return $this->hasMany(JabatanKegiatan::class);
+    }
 }

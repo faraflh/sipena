@@ -9,8 +9,10 @@ class GolonganController extends Controller
 {
     public function index()
     {
-        return response()->json(Golongan::all());
-    }
+        return view('golongan', [
+            'golongan' => $golongan,
+            'currentPage' => 'Golongan', 
+        ]);    }
 
     public function store(Request $request)
     {

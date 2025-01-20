@@ -1,10 +1,16 @@
 <?php
 
 use App\Http\Controllers\AlurController;
+use App\Http\Controllers\DokumenController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\DpaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PermohonanController;
+use App\Http\Controllers\PermohonansController;
+use App\Http\Controllers\JabatanStatusController;
+use App\Http\Controllers\JabatanKegiatanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,29 +29,32 @@ Route::get('/permohonan', function () {
 });
 
 //Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
-Route::get('/jabatan-kegiatan', function () {return view('dashboard');})->name('jabatan-kegiatan');
-Route::get('/jabatan-pegawai', function () {return view('dashboard');})->name('jabatan-pegawai');
-Route::get('/jabatan-status', function () {return view('dashboard');})->name('jabatan-status');
+// Route::get('/jabatan-kegiatan', function () {return view('dashboard');})->name('jabatan-kegiatan');
 Route::get('/manajemen-aplikasi', function () {return view('dashboard');})->name('manajemen-aplikasi');
 Route::get('/manajemen-administrasi', function () {return view('dashboard');})->name('manajemen-administrasi');
 Route::get('/settings', function () {return view('dashboard');})->name('settings');
-Route::get('/alur', function () {return view('alur');})->name('alur');
-Route::get('/pegawai', function () {return view('pegawai');})->name('pegawai');
+// Route::get('/alur', function () {return view('alur');})->name('alur');
+// Route::get('/pegawai', function () {return view('pegawai');})->name('pegawai');
+// Route::get('/permohonans', function () {return view('permohonans');})->name('permohonans');
 //Route::resource('/pegawai', PegawaiController::class);
 Route::resource('pegawai', PegawaiController::class);
 Route::resource('alur', AlurController::class);
+Route::resource('dpa', DpaController::class);
+Route::resource('kategori', KategoriController::class);
+Route::resource('dokumen', DokumenController::class);
+Route::resource('jabatanStatus', JabatanStatusController::class);
+Route::resource('jabatanKegiatan', JabatanKegiatanController::class);
+Route::resource('permohonans', PermohonansController::class);
+
 
 
 Route::get('/', [PageController::class, 'index'])->name('home');
-
-//Route::get('/login', function () {
-//    return view('login');
-//});
 
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/actionLogin', [LoginController::class, 'actionLogin'])->name('actionLogin');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/dashboard', [LoginController::class, 'creds'])->name('dashboard');
+// Route::get('/permohonans', PermohonanController::class)->name('permohonans');
 
 //Route::get('/permohonan', [PermohonanController::class, 'create'])->name('permohonan.create');
 //Route::post('/permohonan', [PermohonanController::class, 'store'])->name('permohonan.submit');

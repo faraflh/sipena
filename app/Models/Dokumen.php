@@ -10,18 +10,18 @@ class Dokumen extends Model
     use HasFactory;
 
     protected $fillable = [
-        'idKategori',
-        'idAlur',
+        'kategori_id',
+        'alur_id',
         'jenisDokumen',
     ];
 
     public function kategori()
     {
-        return $this->belongsTo(Kategori::class, 'idKategori');
+        return $this->belongsTo(Kategori::class);
     }
 
     public function alur()
     {
-        return $this->belongsTo(Alur::class, 'idAlur');
+        return $this->belongsTo(Alur::class);
     }
 }

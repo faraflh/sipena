@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pegawai;
+use App\Models\Kategori;
+use App\Models\JabatanStatus;
 use App\Models\JabatanKegiatan;
 use Illuminate\Http\Request;
 
@@ -9,37 +12,51 @@ class JabatanKegiatanController extends Controller
 {
     public function index()
     {
-        return response()->json(JabatanKegiatan::with(['pegawai', 'kategori'])->get());
+        $jabatanKegiatan = JabatanKegiatan::paginate(5);
+        $pegawai = Pegawai::all();
+        $kategori = Kategori::all();
+        $jabatanStatus = JabatanStatus::all();
+        return view('jabatanKegiatan', [
+            'jabatanKegiatan' => $jabatanKegiatan,
+            'pegawai' => $pegawai,
+            'kategori' => $kategori,
+            'jabatanStatus' => $jabatanStatus,
+            'currentPage' => 'Jabatan Kegiatan', 
+        ]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'idPegawai' => 'required|exists:pegawai,id',
-            'idKategori' => 'required|exists:kategori,id',
-            'jabStatus' => 'required|string|max:255',
+            'pegawai_id' => 'required|exists:pegawais,id',
+            'kategori_id' => 'required|exists:kategoris,id',
+            'jabatan_status_id' => 'required|exists:jabatan_statuses,id',
         ]);
 
-        $jabatanKegiatan = JabatanKegiatan::create($request->all());
-        return response()->json($jabatanKegiatan, 201);
-    }
-
-    public function show($id)
-    {
-        $jabatanKegiatan = JabatanKegiatan::with(['pegawai', 'kategori'])->findOrFail($id);
-        return response()->json($jabatanKegiatan);
+        JabatanKegiatan::create([
+            'pegawai_id' => $request->pegawai_id,
+            'kategori_id' => $request->kategori_id,
+            'jabatan_status_id' => $request->jabatan_status_id,
+        ]);
+        return redirect()->route('jabatanKegiatan.index')->with('success', 'Jabatan Kegiatan created successfully.');
     }
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'pegawai_id' => 'required|exists:pegawais,id',
+            'kategori_id' => 'required|exists:kategoris,id',
+            'jabatan_status_id' => 'required|exists:jabatan_statuses,id',
+        ]);
+
         $jabatanKegiatan = JabatanKegiatan::findOrFail($id);
         $jabatanKegiatan->update($request->all());
-        return response()->json($jabatanKegiatan);
+        return redirect()->route('jabatanKegiatan.index')->with('error', 'Jabatan Kegiatan update failed.');
     }
 
     public function destroy($id)
     {
         JabatanKegiatan::destroy($id);
-        return response()->json(['message' => 'Deleted successfully']);
+        return redirect()->route('jabatanKegiatan.index')->with('success', 'Jabatan Kegiatan deleted successfully.');
     }
 }

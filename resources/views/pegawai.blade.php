@@ -45,11 +45,6 @@
                                         @csrf
                                         @method('DELETE')
                                     </form>
-{{--                                    <span class="edit" data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}">--}}
-{{--                                        <i class="fas fa-pencil-alt ms-4 text-dark cursor-pointer"--}}
-{{--                                           data-bs-toggle="tooltip" data-bs-placement="top"></i>--}}
-{{--                                    </span>--}}
-
                                     <a href="{{ route('pegawai.update', $item->id) }}" class="edit" data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}">
                                         <i class="fas fa-pencil-alt ms-4 text-dark cursor-pointer"
                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"></i>
@@ -97,11 +92,16 @@
                                                                value="{{ $item->email }}" required>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="idJabatanPegawai" class="form-label">Jabatan
-                                                            Pegawai</label>
-                                                        <input type="text" name="jabatan_pegawai_id"
-                                                               class="form-control"
-                                                               value="{{ $item->jabatan_pegawai_id }}" required>
+                                                        <label for="idJabatanPegawai" class="form-label">Jabatan Pegawai</label>
+
+                                                        <select name="jabatan_pegawai_id" class="form-select" required>
+                                                            <option value="" disabled selected>Pilih Jabatan</option>
+                                                            @foreach($jabatanPegawai as $j)
+                                                                <option value="{{ $j->id }}" {{ $item->jabatan_pegawai_id == $j->id ? 'selected' : '' }}>
+                                                                    {{ $j->namaJabatan }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
 
@@ -124,8 +124,13 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="golongan_id" class="form-label">Golongan</label>
-                                                        <input type="text" name="golongan_id" class="form-control"
-                                                               value="{{ $item->golongan_id }}" required>
+                                                        <select name="golongan_id" class="form-select" required>
+                                                            @foreach($golongan as $k)
+                                                                <option value="{{ $k->id }}" {{ $item->golongan_id == $k->id ? 'selected' : '' }}>
+                                                                    {{ $k->namaGolPang }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -176,7 +181,12 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="idJabatanPegawai" class="form-label">Jabatan Pegawai</label>
-                                    <input type="text" name="jabatan_pegawai_id" class="form-control" required>
+                                    <select name="jabatan_pegawai_id" class="form-select" required>
+                                        <option value="" disabled selected>Pilih Jabatan</option>
+                                        @foreach($jabatanPegawai as $j)
+                                            <option value="{{ $j->id }}">{{ $j->namaJabatan }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -195,8 +205,12 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="golongan_id" class="form-label">Golongan</label>
-                                    <input type="text" name="golongan_id" class="form-control" required>
-                                </div>
+                                    <select name="golongan_id" class="form-select" required>
+                                        <option value="" disabled selected>Pilih Golongan</option>
+                                        @foreach($golongan as $k)
+                                            <option value="{{ $k->id }}">{{ $k->namaGolPang }}</option>
+                                        @endforeach
+                                    </select>                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">

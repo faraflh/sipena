@@ -60,6 +60,7 @@ class LoginController extends Controller
         return view('dashboard', [
             'user' => $user,
             'pegawai' => $pegawai,
+            'currentPage' => 'Dashboard', 
         ]);
     }
 
