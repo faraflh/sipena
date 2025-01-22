@@ -17,3 +17,5 @@ class Permohonan extends Model
         'email',
     ];
 }
+
+// push
