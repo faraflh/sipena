@@ -9,7 +9,7 @@ class DpaController extends Controller
 {
     public function index()
     {
-        $dpa = Dpa::all();
+        $dpa = Dpa::paginate(5);
         return view('dpa', [
             'dpa' => $dpa,
             'currentPage' => 'DPA', 

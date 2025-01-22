@@ -26,40 +26,40 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($kategori as $index => $kategori)
+                        @foreach($kategori as $index => $kategoris)
                             <tr>
-                                <td class="text-center">{{ $index + 1 }}</td>
-                                <td class="text-center">{{ $kategori->namaKategori }}</td>
+                            <td class="text-center">{{ ($kategori->currentPage() - 1) * $kategori->perPage() + $loop->iteration }}</td>
+                            <td class="text-center">{{ $kategoris->namaKategori }}</td>
                                 <td class="text-center">
                                     <i class="fas fa-trash-alt text-danger cursor-pointer"
-                                       onclick="event.preventDefault(); document.getElementById('delete-form-{{ $kategori->id }}').submit();"
+                                       onclick="event.preventDefault(); document.getElementById('delete-form-{{ $kategoris->id }}').submit();"
                                        title="Delete"></i>
-                                    <form id="delete-form-{{ $kategori->id }}" action="{{ route('kategori.destroy', $kategori->id) }}" method="POST" style="display: none;">
+                                    <form id="delete-form-{{ $kategoris->id }}" action="{{ route('kategori.destroy', $kategoris->id) }}" method="POST" style="display: none;">
                                         @csrf
                                         @method('DELETE')
                                     </form>
 
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editModal{{ $kategori->id }}">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editModal{{ $kategoris->id }}">
                                         <i class="fas fa-pencil-alt ms-4 text-dark cursor-pointer" title="Edit"></i>
                                     </a>
                                 </td>
                             </tr>
 
                             <!-- Edit Modal -->
-                            <div class="modal fade" id="editModal{{ $kategori->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $kategori->id }}" aria-hidden="true">
+                            <div class="modal fade" id="editModal{{ $kategoris->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $kategoris->id }}" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <form action="{{ route('kategori.update', $kategori->id) }}" method="POST">
+                                        <form action="{{ route('kategori.update', $kategoris->id) }}" method="POST">
                                             @csrf
                                             @method('PUT')
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editModalLabel{{ $kategori->id }}">Edit Kategori</h5>
+                                                <h5 class="modal-title" id="editModalLabel{{ $kategoris->id }}">Edit Kategori</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="mb-3">
                                                     <label for="namaKategori" class="form-label">Nama Kategori</label>
-                                                    <input type="text" name="namaKategori" class="form-control" value="{{ $kategori->namaKategori }}" required>
+                                                    <input type="text" name="namaKategori" class="form-control" value="{{ $kategoris->namaKategori }}" required>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -74,6 +74,10 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-baseline">
+                <p class="text-xs font-weight-bold mb-0">Showing {{ $kategori->firstItem() }} to {{ $kategori->lastItem() }} of {{ $kategori->total() }} entries</p>
+                {{ $kategori->links('pagination::bootstrap-5') }}
             </div>
         </div>
 

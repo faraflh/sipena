@@ -34,8 +34,8 @@
                         <tbody>
                         @foreach($alur as $index => $item)
                             <tr>
-                                <td class="text-center">{{ $index + 1 }}</td>
-                                <td class="text-center text">{{ $item->namaAlur }}</td>
+                            <td class="text-center">{{ ($alur->currentPage() - 1) * $alur->perPage() + $loop->iteration }}</td>
+                            <td class="text-center text">{{ $item->namaAlur }}</td>
                                 <td class="align-middle text-center">
                                     <i class="fas fa-trash-alt ms-auto text-danger cursor-pointer"
                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
@@ -92,6 +92,10 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-baseline">
+                <p class="text-xs font-weight-bold mb-0">Showing {{ $alur->firstItem() }} to {{ $alur->lastItem() }} of {{ $alur->total() }} entries</p>
+                {{ $alur->links('pagination::bootstrap-5') }}
             </div>
         </div>
 

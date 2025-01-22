@@ -11,7 +11,7 @@ class DokumenController extends Controller
 {
     public function index()
     {
-        $dokumen = Dokumen::all();
+        $dokumen = Dokumen::paginate(5);
         $kategori = Kategori::all(); // Panggil model Kategori
         $alur = Alur::all(); // Panggil model Alur
         return view('dokumen', [

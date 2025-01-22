@@ -91,10 +91,6 @@
                                             <i class="fa fa-eye-slash" id="toggleIcon"></i>
                                         </button>
                                     </div>
-                                    <div class="checkbox" style="width: 100%; display: flex; align-items: center;">
-                                        <input type="checkbox" id="remember" name="remember">
-                                        <label for="remember" style="margin-left: 5px;">Remember Me</label>
-                                    </div>
                                     <button type="submit" class="button col-2" style="margin-top: 15px;">Login</button>
                                 </form>
                             </div>

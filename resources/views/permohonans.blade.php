@@ -17,8 +17,9 @@
                         <tr>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Pemohon</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">NIP</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Aplikasi</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Generate Code</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                         </tr>
                         </thead>
@@ -27,8 +28,9 @@
                             <tr>
                                 <td class="text-center">{{ ($permohonan->currentPage() - 1) * $permohonan->perPage() + $loop->iteration }}</td>
                                 <td>{{ $item->nama_pemohon }}</td>
-                                <td class="text-center">{{ $item->nip }}</td>
                                 <td>{{ $item->nama_aplikasi }}</td>
+                                <td>{{ $item->status }}</td>
+                                <td>{{ $item->generate_code }}</td>
                                 <td class="text-center">
                                     <i class="fas fa-trash-alt ms-auto text-danger cursor-pointer"
                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
@@ -88,8 +90,25 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
+    @if (!$item->status) <!-- Jika status masih kosong/null -->
+        <form action="{{ route('permohonans.updateStatus', $item->id) }}" method="POST" style="display: inline-block;">
+            @csrf
+            <input type="hidden" name="status" value="Diterima">
+            <button type="submit" class="btn btn-success">Terima</button>
+        </form>
+        <form action="{{ route('permohonans.updateStatus', $item->id) }}" method="POST" style="display: inline-block;">
+            @csrf
+            <input type="hidden" name="status" value="Ditolak">
+            <button type="submit" class="btn btn-danger">Tolak</button>
+        </form>
+    @elseif ($item->status === 'Diterima') 
+        <button type="button" class="btn btn-terima">Diterima</button>
+    @elseif ($item->status === 'Ditolak')
+        <button type="button" class="btn btn-danger">Ditolak</button>
+    @endif
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+</div>
+
         </div>
     </div>
 </div>

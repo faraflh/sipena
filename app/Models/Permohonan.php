@@ -15,5 +15,7 @@ class Permohonan extends Model
         'nama_opd',
         'nama_aplikasi',
         'email',
+        'status',
+        'generate_code',
     ];
 }

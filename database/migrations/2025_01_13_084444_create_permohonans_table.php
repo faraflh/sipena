@@ -15,10 +15,11 @@ return new class extends Migration {
             $table->string('nama_opd');
             $table->string('nama_aplikasi');
             $table->string('email');
+            $table->string('status')->nullable(); 
+            $table->string('generate_code')->nullable();
             $table->timestamps();
         });
     }
-
     public function down(): void
     {
         Schema::dropIfExists('permohonans');

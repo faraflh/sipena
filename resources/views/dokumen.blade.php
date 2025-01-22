@@ -30,8 +30,8 @@
                         <tbody>
                         @foreach($dokumen as $index => $doc)
                             <tr>
-                                <td class="text-center">{{ $index + 1 }}</td>
-                                <td class="text-center">{{ $doc->kategori->namaKategori }}</td>
+                            <td class="text-center">{{ ($dokumen->currentPage() - 1) * $dokumen->perPage() + $loop->iteration }}</td>
+                            <td class="text-center">{{ $doc->kategori->namaKategori }}</td>
                                 <td class="text-center">{{ $doc->jenisDokumen }}</td>
                                 <td class="text-center">{{ $doc->alur->namaAlur }}</td>
                                 <td class="text-center">
@@ -99,6 +99,10 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-baseline">
+                <p class="text-xs font-weight-bold mb-0">Showing {{ $dokumen->firstItem() }} to {{ $dokumen->lastItem() }} of {{ $dokumen->total() }} entries</p>
+                {{ $dokumen->links('pagination::bootstrap-5') }}
             </div>
         </div>
 

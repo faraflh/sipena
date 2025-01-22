@@ -56,7 +56,7 @@ body {
 }
 
 html, body {
-    height: 95vh;
+    height: 94vh;
     margin: 0;
 }
 
@@ -3538,6 +3538,21 @@ textarea.form-control.is-invalid {
     font-size: 0.75rem;
     border-radius: 0.5rem;
     transition: all 0.15s ease-in;
+}
+
+.btn-terima {
+    background-color: #4ac776;
+    color: #fff;
+}
+
+.btn-terima:hover {
+    color: #fff;
+    background-color: #4ac776;
+}
+
+.btn-terima.btn:hover {
+    color: #fff;
+    background-color: #4ac776; 
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -20915,7 +20930,7 @@ hr.horizontal.gray-light {
     top: 0;
     bottom: 0;
     width: 100%;
-    max-width: 15.625rem !important;
+    max-width: 16.625rem !important;
     overflow-y: auto;
     padding: 0;
     box-shadow: none;

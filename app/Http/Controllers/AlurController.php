@@ -9,7 +9,7 @@ class AlurController extends Controller
 {
     public function index()
     {
-        $alur = Alur::all();
+        $alur = Alur::paginate(5);
 
         return view('alur', [
             'alur' => $alur,

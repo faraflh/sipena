@@ -28,70 +28,70 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($dpa as $index => $dpa)
+                        @foreach($dpa as $index => $dpas)
                             <tr>
-                                <td class="text-center">{{ $index + 1 }}</td>
-                                <td class="text-center">{{ $dpa->noDPA }}</td>
-                                <td class="text-center">{{ $dpa->tujuan }}</td>
-                                <td class="text-center">{{ $dpa->subKeg }}</td>
+                            <td class="text-center">{{ ($dpa->currentPage() - 1) * $dpa->perPage() + $loop->iteration }}</td>
+                            <td class="text-center">{{ $dpas->noDPA }}</td>
+                                <td class="text-center">{{ $dpas->tujuan }}</td>
+                                <td class="text-center">{{ $dpas->subKeg }}</td>
                                 <td class="text-center">
                                     <i class="fas fa-trash-alt text-danger cursor-pointer"
-                                       onclick="event.preventDefault(); document.getElementById('delete-form-{{ $dpa->id }}').submit();"
+                                       onclick="event.preventDefault(); document.getElementById('delete-form-{{ $dpas->id }}').submit();"
                                        title="Delete"></i>
-                                    <form id="delete-form-{{ $dpa->id }}" action="{{ route('dpa.destroy', $dpa->id) }}" method="POST" style="display: none;">
+                                    <form id="delete-form-{{ $dpas->id }}" action="{{ route('dpa.destroy', $dpas->id) }}" method="POST" style="display: none;">
                                         @csrf
                                         @method('DELETE')
                                     </form>
 
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editModal{{ $dpa->id }}">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editModal{{ $dpas->id }}">
                                         <i class="fas fa-pencil-alt ms-4 text-dark cursor-pointer" title="Edit"></i>
                                     </a>
                                 </td>
                             </tr>
 
                             <!-- Edit Modal -->
-                            <div class="modal fade" id="editModal{{ $dpa->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $dpa->id }}" aria-hidden="true">
+                            <div class="modal fade" id="editModal{{ $dpas->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $dpas->id }}" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <form action="{{ route('dpa.update', $dpa->id) }}" method="POST">
+                                        <form action="{{ route('dpa.update', $dpas->id) }}" method="POST">
                                             @csrf
                                             @method('PUT')
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editModalLabel{{ $dpa->id }}">Edit DPA</h5>
+                                                <h5 class="modal-title" id="editModalLabel{{ $dpas->id }}">Edit DPA</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body row">
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="noSPT" class="form-label">No. SPT</label>
-                                                        <input type="text" name="noSPT" class="form-control" value="{{ $dpa->noSPT }}" required>
+                                                        <input type="text" name="noSPT" class="form-control" value="{{ $dpas->noSPT }}" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="noSPPD" class="form-label">No. SPPD</label>
-                                                        <input type="text" name="noSPPD" class="form-control" value="{{ $dpa->noSPPD }}" required>
+                                                        <input type="text" name="noSPPD" class="form-control" value="{{ $dpas->noSPPD }}" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="tujuan" class="form-label">Tujuan</label>
-                                                        <input type="text" name="tujuan" class="form-control" value="{{ $dpa->tujuan }}" required>
+                                                        <input type="text" name="tujuan" class="form-control" value="{{ $dpas->tujuan }}" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="noRek" class="form-label">No. Rekening</label>
-                                                        <input type="text" name="noRek" class="form-control" value="{{ $dpa->noRek }}" required>
+                                                        <input type="text" name="noRek" class="form-control" value="{{ $dpas->noRek }}" required>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="noDPA" class="form-label">No. DPA</label>
-                                                        <input type="text" name="noDPA" class="form-control" value="{{ $dpa->noDPA }}" required>
+                                                        <input type="text" name="noDPA" class="form-control" value="{{ $dpas->noDPA }}" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="subKeg" class="form-label">Sub Kegiatan</label>
-                                                        <input type="text" name="subKeg" class="form-control" value="{{ $dpa->subKeg }}" required>
+                                                        <input type="text" name="subKeg" class="form-control" value="{{ $dpas->subKeg }}" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="tahun" class="form-label">Tahun</label>
-                                                        <input type="text" name="tahun" class="form-control" value="{{ $dpa->tahun }}" required>
+                                                        <input type="text" name="tahun" class="form-control" value="{{ $dpas->tahun }}" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -107,6 +107,10 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-baseline">
+                <p class="text-xs font-weight-bold mb-0">Showing {{ $dpa->firstItem() }} to {{ $dpa->lastItem() }} of {{ $dpa->total() }} entries</p>
+                {{ $dpa->links('pagination::bootstrap-5') }}
             </div>
         </div>
 
