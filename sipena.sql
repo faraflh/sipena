@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2025 at 08:56 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Jan 22, 2025 at 08:44 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,6 +34,89 @@ CREATE TABLE `alurs` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `alurs`
+--
+
+INSERT INTO `alurs` (`id`, `namaAlur`, `created_at`, `updated_at`) VALUES
+(3, 'Pengembangan', '2025-01-20 18:06:30', '2025-01-20 20:35:04'),
+(4, 'Permohonan', '2025-01-20 20:34:57', '2025-01-20 20:34:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `aplikasis`
+--
+
+CREATE TABLE `aplikasis` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `namaAplikasi` varchar(255) NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `detail_tim_id` bigint(20) UNSIGNED NOT NULL,
+  `detail_dokumen_id` bigint(20) UNSIGNED NOT NULL,
+  `alur_id` bigint(20) UNSIGNED NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_alurs`
+--
+
+CREATE TABLE `detail_alurs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `aplikasi_id` bigint(20) UNSIGNED NOT NULL,
+  `alur_id` bigint(20) UNSIGNED NOT NULL,
+  `keterangan_alur` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `detail_alurs`
+--
+
+INSERT INTO `detail_alurs` (`id`, `aplikasi_id`, `alur_id`, `keterangan_alur`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 'halo', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_dokumens`
+--
+
+CREATE TABLE `detail_dokumens` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `namaDokumen` varchar(255) NOT NULL,
+  `file` varchar(255) NOT NULL,
+  `aplikasi_id` bigint(20) UNSIGNED NOT NULL,
+  `dokumen_id` bigint(20) UNSIGNED NOT NULL,
+  `noSurat` int(11) NOT NULL,
+  `perihal` varchar(255) NOT NULL,
+  `tanggalSurat` date NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_tims`
+--
+
+CREATE TABLE `detail_tims` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `jabatan_kegiatan_id` bigint(20) UNSIGNED NOT NULL,
+  `pegawai_id` bigint(20) UNSIGNED NOT NULL,
+  `aplikasi_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -48,6 +131,13 @@ CREATE TABLE `dokumens` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `dokumens`
+--
+
+INSERT INTO `dokumens` (`id`, `kategori_id`, `alur_id`, `jenisDokumen`, `created_at`, `updated_at`) VALUES
+(1, 1, 4, 'apa ajalah', '2025-01-20 18:06:49', '2025-01-20 20:35:32');
 
 -- --------------------------------------------------------
 
@@ -67,6 +157,13 @@ CREATE TABLE `dpas` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `dpas`
+--
+
+INSERT INTO `dpas` (`id`, `noSPT`, `noSPPD`, `tujuan`, `noRek`, `noDPA`, `subKeg`, `tahun`, `created_at`, `updated_at`) VALUES
+(1, 123, 132, 'apa', 876623, 7645, 'app', '2023', '2025-01-19 21:05:59', '2025-01-19 21:06:20');
 
 -- --------------------------------------------------------
 
@@ -116,10 +213,19 @@ CREATE TABLE `jabatan_kegiatans` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `pegawai_id` bigint(20) UNSIGNED NOT NULL,
   `kategori_id` bigint(20) UNSIGNED NOT NULL,
-  `jabStatus` varchar(255) NOT NULL,
+  `jabatan_status_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `jabatan_kegiatans`
+--
+
+INSERT INTO `jabatan_kegiatans` (`id`, `pegawai_id`, `kategori_id`, `jabatan_status_id`, `created_at`, `updated_at`) VALUES
+(2, 5, 1, 2, '2025-01-19 20:06:07', '2025-01-19 20:06:07'),
+(3, 2, 1, 2, '2025-01-20 10:22:43', '2025-01-20 10:22:43'),
+(4, 2, 1, 2, '2025-01-21 23:41:27', '2025-01-21 23:41:27');
 
 -- --------------------------------------------------------
 
@@ -156,6 +262,14 @@ CREATE TABLE `jabatan_statuses` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `jabatan_statuses`
+--
+
+INSERT INTO `jabatan_statuses` (`id`, `namaJabatanStatus`, `created_at`, `updated_at`) VALUES
+(1, 'pptk', '2025-01-19 08:06:24', '2025-01-19 08:06:24'),
+(2, 'subbag', '2025-01-19 08:06:30', '2025-01-19 08:06:30');
+
 -- --------------------------------------------------------
 
 --
@@ -165,6 +279,28 @@ CREATE TABLE `jabatan_statuses` (
 CREATE TABLE `kategoris` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `namaKategori` varchar(20) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `kategoris`
+--
+
+INSERT INTO `kategoris` (`id`, `namaKategori`, `created_at`, `updated_at`) VALUES
+(1, 'aplikasi', '2025-01-19 08:07:19', '2025-01-19 08:07:19');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kegiatans`
+--
+
+CREATE TABLE `kegiatans` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `namaKegiatan` varchar(255) NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -189,17 +325,22 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2014_10_12_100000_create_password_reset_tokens_table', 1),
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(5, '2025_01_13_084444_create_permohonans_table', 1),
 (6, '2025_01_15_054654_create_alurs_table', 1),
 (7, '2025_01_15_054758_create_dokumens_table', 1),
 (8, '2025_01_15_054820_create_dpas_table', 1),
 (9, '2025_01_15_054836_create_golongans_table', 1),
-(10, '2025_01_15_054902_create_jabatan_kegiatans_table', 1),
 (11, '2025_01_15_054920_create_jabatan_pegawais_table', 1),
 (12, '2025_01_15_054948_create_jabatan_statuses_table', 1),
 (13, '2025_01_15_055339_create_kategoris_table', 1),
 (14, '2025_01_15_055348_create_pegawais_table', 1),
-(15, '2014_10_12_000000_create_users_table', 2);
+(15, '2014_10_12_000000_create_users_table', 2),
+(16, '2025_01_15_054902_create_jabatan_kegiatans_table', 3),
+(19, '2025_01_21_082645_create_kegiatans_table', 5),
+(20, '2025_01_21_082738_create_aplikasis_table', 6),
+(21, '2025_01_21_082807_create_detail_tims_table', 6),
+(22, '2025_01_21_082830_create_detail_dokumens_table', 7),
+(23, '2025_01_21_084338_create_detail_alurs_table', 7),
+(24, '2025_01_13_084444_create_permohonans_table', 8);
 
 -- --------------------------------------------------------
 
@@ -238,12 +379,12 @@ CREATE TABLE `pegawais` (
 --
 
 INSERT INTO `pegawais` (`id`, `nip_nik`, `nama`, `namaRek`, `noRek`, `bank`, `golongan_id`, `jabatan_pegawai_id`, `email`, `created_at`, `updated_at`) VALUES
-(1, '1409024609040002', 'John Doe', 'John Doe', 123456789, 'Bank A', 2, 2, 'johndoe@jon.com', '2025-01-15 08:01:11', '2025-01-16 23:07:18'),
 (2, '6403035709030001', 'Jane Smith', 'Jane Smith', 987654321, 'Bank B', 2, 2, 'janesmith@example.com', '2025-01-15 08:01:11', '2025-01-16 23:06:58'),
 (3, '2102045508040002', 'Aisyah', 'Michael Johnson', 112233445, 'Bank C', 3, 3, 'michaeljohnson@example.com', '2025-01-15 08:01:11', '2025-01-17 00:34:53'),
 (4, '1409024609040002', 'Sabrina', 'Sabrina Ina', 987654321, 'ABC Bank', 2, 1, 'sabrina@awaliah.com', '2025-01-15 01:26:29', '2025-01-16 22:07:40'),
 (5, '6403035709030001', 'farah', 'farah', 14409028, 'bni', 1, 3, 'farahaflah17@gmail.com', '2025-01-16 23:00:11', '2025-01-16 23:00:11'),
-(6, '6403035709030001', 'yona', 'yona', 14409028, 'bni', 1, 3, 'admin@admin.com', '2025-01-17 00:32:23', '2025-01-17 00:32:23');
+(7, '1409024609040001', 'a', 'hm', 876623, 'abc', 2, 3, 'yona.fadia@gmail.com', '2025-01-20 20:27:17', '2025-01-20 20:27:17'),
+(8, '1409024609040002', 'uhdfjn', 'hm', 876623, 'abc', 1, 1, 'yona.fadia@gmail.com', '2025-01-20 20:27:44', '2025-01-20 20:27:44');
 
 -- --------------------------------------------------------
 
@@ -259,6 +400,8 @@ CREATE TABLE `permohonans` (
   `nama_opd` varchar(255) NOT NULL,
   `nama_aplikasi` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `generate_code` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -267,8 +410,9 @@ CREATE TABLE `permohonans` (
 -- Dumping data for table `permohonans`
 --
 
-INSERT INTO `permohonans` (`id`, `nama_pemohon`, `nip`, `nomor_telepon`, `nama_opd`, `nama_aplikasi`, `email`, `created_at`, `updated_at`) VALUES
-(1, 'abdul', 201209, 813, 'kpu', 'gatau', 'admin@admin.com', '2025-01-17 00:46:31', '2025-01-17 00:46:31');
+INSERT INTO `permohonans` (`id`, `nama_pemohon`, `nip`, `nomor_telepon`, `nama_opd`, `nama_aplikasi`, `email`, `status`, `generate_code`, `created_at`, `updated_at`) VALUES
+(1, 'yona', 176556828827363782, 9837663818, 'sapa aja', 'g', 'meow@riau.go.id', 'Ditolak', NULL, '2025-01-21 23:59:20', '2025-01-22 00:00:27'),
+(2, 'yona', 176556828827363782, 12345678, 'sapa aja', 'meow', 'meow@riau.go.id', 'Diterima', '731512', '2025-01-22 00:03:12', '2025-01-22 00:03:42');
 
 -- --------------------------------------------------------
 
@@ -324,6 +468,30 @@ ALTER TABLE `alurs`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `aplikasis`
+--
+ALTER TABLE `aplikasis`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `detail_alurs`
+--
+ALTER TABLE `detail_alurs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `detail_dokumens`
+--
+ALTER TABLE `detail_dokumens`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `detail_tims`
+--
+ALTER TABLE `detail_tims`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `dokumens`
 --
 ALTER TABLE `dokumens`
@@ -373,6 +541,12 @@ ALTER TABLE `kategoris`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `kegiatans`
+--
+ALTER TABLE `kegiatans`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -418,19 +592,43 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `alurs`
 --
 ALTER TABLE `alurs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `aplikasis`
+--
+ALTER TABLE `aplikasis`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `detail_alurs`
+--
+ALTER TABLE `detail_alurs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `detail_dokumens`
+--
+ALTER TABLE `detail_dokumens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `detail_tims`
+--
+ALTER TABLE `detail_tims`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `dokumens`
 --
 ALTER TABLE `dokumens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `dpas`
 --
 ALTER TABLE `dpas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -448,7 +646,7 @@ ALTER TABLE `golongans`
 -- AUTO_INCREMENT for table `jabatan_kegiatans`
 --
 ALTER TABLE `jabatan_kegiatans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `jabatan_pegawais`
@@ -460,31 +658,37 @@ ALTER TABLE `jabatan_pegawais`
 -- AUTO_INCREMENT for table `jabatan_statuses`
 --
 ALTER TABLE `jabatan_statuses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `kategoris`
 --
 ALTER TABLE `kategoris`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `kegiatans`
+--
+ALTER TABLE `kegiatans`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `pegawais`
 --
 ALTER TABLE `pegawais`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `permohonans`
 --
 ALTER TABLE `permohonans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`

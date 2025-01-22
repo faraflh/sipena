@@ -7,14 +7,21 @@ use Illuminate\Http\Request;
 
 class JabatanStatusController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $jabatanStatus = JabatanStatus::paginate(5);
+        $query = JabatanStatus::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('namaJabatanStatus', 'like', '%' . $request->search . '%');
+        }
+
+        $jabatanStatus = $query->paginate(5);
 
         return view('jabatanStatus', [
             'jabatanStatus' => $jabatanStatus,
-            'currentPage' => 'Jabatan Status', 
-        ]);    }
+            'currentPage' => 'Jabatan Status',
+        ]);
+    }
 
     public function store(Request $request)
     {

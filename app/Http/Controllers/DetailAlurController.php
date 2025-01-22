@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 use App\Models\DetailAlur;
+use App\Models\Aplikasi;
+use App\Models\Alur;
 use Illuminate\Http\Request;
 
 class DetailAlurController extends Controller
 {
     public function index(Request $request)
     {
+        $detailAlur = DetailAlur::with('aplikasi', 'alur')->select('detail_alurs.*');
+        $aplikasi = Aplikasi::all();
+        $alur = Alur::all();
+
         if ($request->ajax()) {
-            $detailAlur = DetailAlur::with('aplikasi', 'alur')->select('detail_alurs.*');
             return datatables()->of($detailAlur)
                 ->addColumn('action', function ($row) {
                     return '<a href="' . route('detailAlur.edit', $row->id) . '" class="btn btn-primary btn-sm">Edit</a>
@@ -22,6 +27,9 @@ class DetailAlurController extends Controller
         }
 
         return view('manajemen-aplikasi.detailAlur', [
+            'detailAlur' => $detailAlur->get(),
+            'aplikasi' => $aplikasi,
+            'alur' => $alur,
             'currentPage' => 'Detail Alur', 
         ]);
     }
@@ -41,13 +49,13 @@ class DetailAlurController extends Controller
 
         DetailAlur::create($request->all());
 
-        return redirect()->route('detail-alur.index')->with('success', 'Detail Alur created successfully.');
+        return redirect()->route('detailAlur.index')->with('success', 'Detail Alur created successfully.');
     }
 
     public function edit($id)
     {
         $detailAlur = DetailAlur::findOrFail($id);
-        return view('detail_alur.edit', compact('detailAlur'));
+        return view('detailAlur.edit', compact('detailAlur'));
     }
 
     public function update(Request $request, $id)
@@ -61,12 +69,12 @@ class DetailAlurController extends Controller
         $detailAlur = DetailAlur::findOrFail($id);
         $detailAlur->update($request->all());
 
-        return redirect()->route('detail-alur.index')->with('success', 'Detail Alur updated successfully.');
+        return redirect()->route('detailAlur.index')->with('success', 'Detail Alur updated successfully.');
     }
 
     public function destroy($id)
     {
         DetailAlur::destroy($id);
-        return redirect()->route('detail-alur.index')->with('success', 'Detail Alur deleted successfully.');
+        return redirect()->route('detailAlur.index')->with('success', 'Detail Alur deleted successfully.');
     }
 }
