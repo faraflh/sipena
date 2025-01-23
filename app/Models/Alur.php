@@ -13,6 +13,7 @@ class Alur extends Model
         'namaAlur',
     ];
 
+
     public function dokumen()
     {
         return $this->hasMany(Dokumen::class, 'idAlur');

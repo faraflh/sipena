@@ -29,11 +29,18 @@ Route::get('/jabatan-status', function () {return view('dashboard');})->name('ja
 Route::get('/manajemen-aplikasi', function () {return view('dashboard');})->name('manajemen-aplikasi');
 Route::get('/manajemen-administrasi', function () {return view('dashboard');})->name('manajemen-administrasi');
 Route::get('/settings', function () {return view('dashboard');})->name('settings');
-Route::get('/alur', function () {return view('alur');})->name('alur');
+
 Route::get('/pegawai', function () {return view('pegawai');})->name('pegawai');
 //Route::resource('/pegawai', PegawaiController::class);
 Route::resource('pegawai', PegawaiController::class);
-Route::resource('alur', AlurController::class);
+Route::prefix('alur')->name('alur.')->group(function() {
+    Route::get('/', [AlurController::class, 'index'])->name('index');
+    Route::get('create', [AlurController::class, 'create'])->name('create');
+    Route::post('store', [AlurController::class, 'store'])->name('store');
+    Route::get('edit/{id}', [AlurController::class, 'edit'])->name('edit');
+    Route::put('update/{id}', [AlurController::class, 'update'])->name('update');
+    Route::delete('destroy/{id}', [AlurController::class, 'destroy'])->name('destroy');
+});
 
 
 Route::get('/', [PageController::class, 'index'])->name('home');
