@@ -5,14 +5,20 @@
         <div class="card">
             <div class="card-header pb-0 p-3">
                 <div class="row">
-                    <div class="col-6 d-flex align-items-center">
+                    <div class="col-12 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">Alur</h5>
-                    </div>
-                    <div class="col-6 text-end">
-                        <button class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" data-bs-target="#createModal">
-                            <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Alur Baru
-                        </button>
-                    </div>
+                        <form method="GET" action="{{ route('alur.index') }}" class="d-flex align-items-center">
+                        <div class="input-group me-3">
+                            <span class="input-group-text text-body">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                            </span>
+                            <input type="text" name="search" class="form-control border-start-0" placeholder="Type here..."
+                                value="{{ request('search') }}">
+                        </div>
+                        <a class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" data-bs-target="#createModal">
+                            <i class="fas fa-plus"></i>&nbsp;&nbsp; Tambah Alur Baru
+                        </a>
+                    </form>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">

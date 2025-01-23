@@ -1,39 +1,45 @@
 @extends('partials.dashboardLayout')
 
 @section('content')
-    <div class="container-fluid py-4">
-        <div class="card">
-            <div class="card-header pb-0 p-3">
-                <div class="row">
-                    <div class="col-6 d-flex align-items-center">
-                        <h5 class="mb-0">Kategori</h5>
-                    </div>
-                    <div class="col-6 text-end">
-                        <button class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" data-bs-target="#createModal">
+<div class="container-fluid py-4">
+    <div class="card">
+        <div class="card-header pb-0 p-3">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Kategori</h5>
+                    <form method="GET" action="{{ route('kategori.index') }}" class="d-flex align-items-center">
+                        <div class="input-group me-3">
+                            <span class="input-group-text text-body">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                            </span>
+                            <input type="text" name="search" class="form-control border-start-0" placeholder="Type here..."
+                                value="{{ request('search') }}">
+                        </div>
+                        <a class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" data-bs-target="#createModal">
                             <i class="fas fa-plus"></i>&nbsp;&nbsp; Tambah Kategori Baru
-                        </button>
-                    </div>
+                        </a>
+                    </form>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">
                 <div class="table-responsive">
                     <table class="table align-items-center mb-0">
                         <thead>
-                        <tr>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Kategori</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
-                        </tr>
+                            <tr>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Kategori</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach($kategori as $index => $kategori)
+                            @foreach($kategori as $index => $kategori)
                             <tr>
                                 <td class="text-center">{{ $index + 1 }}</td>
                                 <td class="text-center">{{ $kategori->namaKategori }}</td>
                                 <td class="text-center">
                                     <i class="fas fa-trash-alt text-danger cursor-pointer"
-                                       onclick="event.preventDefault(); document.getElementById('delete-form-{{ $kategori->id }}').submit();"
-                                       title="Delete"></i>
+                                        onclick="event.preventDefault(); document.getElementById('delete-form-{{ $kategori->id }}').submit();"
+                                        title="Delete"></i>
                                     <form id="delete-form-{{ $kategori->id }}" action="{{ route('kategori.destroy', $kategori->id) }}" method="POST" style="display: none;">
                                         @csrf
                                         @method('DELETE')
@@ -70,7 +76,7 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -102,4 +108,4 @@
             </div>
         </div>
     </div>
-@endsection
+    @endsection

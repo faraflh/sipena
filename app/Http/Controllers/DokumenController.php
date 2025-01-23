@@ -9,8 +9,14 @@ use Illuminate\Http\Request;
 
 class DokumenController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = Dokumen::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('namaDokumen', 'like', '%' . $request->search . '%');
+        }
+
         $dokumen = Dokumen::all();
         $kategori = Kategori::all(); // Panggil model Kategori
         $alur = Alur::all(); // Panggil model Alur

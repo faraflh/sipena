@@ -10,12 +10,18 @@ use Illuminate\Http\Request;
 
 class JabatanKegiatanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = JabatanKegiatan::query();
         $jabatanKegiatan = JabatanKegiatan::paginate(5);
         $pegawai = Pegawai::all();
         $kategori = Kategori::all();
         $jabatanStatus = JabatanStatus::all();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('namaJabatanKegiatan', 'like', '%' . $request->search . '%');
+        }
+        
         return view('jabatanKegiatan', [
             'jabatanKegiatan' => $jabatanKegiatan,
             'pegawai' => $pegawai,

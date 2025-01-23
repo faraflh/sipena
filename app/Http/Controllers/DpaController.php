@@ -7,8 +7,14 @@ use Illuminate\Http\Request;
 
 class DpaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = dpa::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('namaDpa', 'like', '%' . $request->search . '%');
+        }
+
         $dpa = Dpa::all();
         return view('dpa', [
             'dpa' => $dpa,

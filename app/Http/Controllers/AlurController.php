@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 
 class AlurController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $alur = Alur::all();
+        $query = Alur::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('namaAlur', 'like', '%' . $request->search . '%');
+        }
+
+        $alur = $query->get();
 
         return view('alur', [
             'alur' => $alur,

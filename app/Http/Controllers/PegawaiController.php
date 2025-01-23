@@ -10,8 +10,14 @@ use Illuminate\Support\Facades\DB;
 
 class PegawaiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = Pegawai::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('namaPegawai', 'like', '%' . $request->search . '%');
+        }
+
         $pegawai = Pegawai::with(['golongan', 'jabatanPegawai'])->paginate(5); // Paginate 5 items per page
         $golongan = Golongan::all();
         $jabatanPegawai = JabatanPegawai::all();
