@@ -39,7 +39,11 @@
 
             <!-- Master -->
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('jabatanKegiatan.index', 'jabatanStatus.index', 'dpa.index', 'kategori.index', 'alur.index', 'dokumen.index') ? 'active' : '' }}" href="#masterMenu" data-bs-toggle="collapse" role="button" aria-expanded="{{ request()->routeIs('jabatanKegiatan.index', 'jabatanStatus.index', 'dpa.index', 'kategori.index', 'alur.index', 'dokumen.index') ? 'active' : '' }}" aria-controls="masterMenu">
+                <a class="nav-link {{ request()->routeIs('jabatanKegiatan.index', 'jabatanStatus.index', 'dpa.index', 'kategori.index', 'alur.index', 'dokumen.index') ? 'active' : '' }}" 
+                href="#masterMenu" 
+                data-bs-toggle="collapse" 
+                role="button" 
+                aria-expanded="{{ request()->routeIs('jabatanKegiatan.index', 'jabatanStatus.index', 'dpa.index', 'kategori.index', 'alur.index', 'dokumen.index') ? 'true' : 'false' }}" aria-controls="masterMenu">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
                              xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -62,7 +66,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Master</span>
                 </a>
-                <div class="collapse" id="masterMenu">
+                <div class="collapse {{ request()->routeIs('jabatanKegiatan.index', 'jabatanStatus.index', 'dpa.index', 'kategori.index', 'alur.index', 'dokumen.index') ? 'show' : '' }}"  id="masterMenu">
                     <ul class="navbar-nav ps-3">
                         <li class="nav-item dropdown-item">
                             <a class="nav-link {{ request()->routeIs('jabatanKegiatan.index') ? 'active' : '' }}" href="{{ route('jabatanKegiatan.index') }}">
@@ -150,7 +154,7 @@
 
             <!-- Manajemen Aplikasi -->
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('manajemen-aplikasi') ? 'active' : '' }}" href="{{ route('manajemen-aplikasi') }}">
+                <a class="nav-link {{ request()->is('manajemen-aplikasi*') ? 'active' : '' }}" href="{{ route('manajemen-aplikasi.index') }}">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg fill="#000000" width="14px" height="14px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                                 viewBox="0 0 512 512" xml:space="preserve">
@@ -264,7 +268,7 @@
 
             <!-- Report -->
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('settings', 'settings') ? 'active' : '' }}" href="#reportMenu" data-bs-toggle="collapse" role="button" aria-expanded="{{ request()->routeIs('settings', 'settings') ? 'active' : '' }}" aria-controls="reportMenu">
+                <a class="nav-link {{ request()->routeIs('settings', 'settings') ? 'active' : '' }}" href="#reportMenu" data-bs-toggle="collapse" role="button" aria-expanded="{{ request()->routeIs('settings', 'settings') ? 'true' : 'false' }}" aria-controls="reportMenu">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="14px" height="14px">
                         <path class="color-background" d="M17,6V8H15a1,1,0,0,0-1,1V26.16H12V9a3,3,0,0,1,3-3Z" />
@@ -277,7 +281,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Report</span>
                 </a>
-                <div class="collapse" id="reportMenu">
+                <div class="collapse {{ request()->routeIs( 'settings', 'settings') ? 'show' : '' }}" id="reportMenu">
                     <ul class="navbar-nav ps-3">
                         <li class="nav-item dropdown-item">
                             <a class="nav-link {{ request()->routeIs('settings') ? 'active' : '' }}" href="{{ route('settings') }}">

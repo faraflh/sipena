@@ -7,51 +7,70 @@
             <div class="card-header pb-0 p-3">
                 <div class="row">
                     <div class="col-6 d-flex align-items-center">
-                        <h5 class="mb-0">Kategori</h5>
+                        <h5 class="mb-0">Manajemen Aplikasi</h5>
                     </div>
                     <div class="col-6 text-end"> 
                         <div class="d-inline-block position-relative">
                             <i class="fas fa-search position-absolute search-icon"></i>
-                            <input type="text" id="customSearch" class="form-control d-inline " placeholder="Search...">
+                            <input type="text" id="customSearch" class="form-control d-inline border-start-0" placeholder="Search...">
                         </div>
-                        <button class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" id="addNewKatBtn" data-bs-target="#createModal">
-                           <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Kategori Baru
+                        <button class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" id="addNewAplikasiBtn" data-bs-target="#createModal">
+                           <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Aplikasi Baru
                         </button>
                     </div>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">
                 <div class="table-responsive">
-                    <table class="table tabel align-items-center mb-0">
-                        <thead>
-                            <tr>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Nama Kategori <i class="fas fa-sort"></i> </th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Aksi </th>
-                            </tr>
-                        </thead>
-                    </table>
+                <table class="table tabel align-items-center mb-0">
+                    <thead>
+                        <tr>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Aplikasi</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kelola Tim</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kelola Dokumen</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kelola Alur</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                        </tr>
+                    </thead>
+                </table>
                 </div>
             </div>
         </div>
 
      <!-- Create Modal -->
-     <div class="modal fade" id="kategoriModal" tabindex="-1" aria-labelledby="kategoriModalLabel" aria-hidden="true">
+     <div class="modal fade" id="aplikasiModal" tabindex="-1" aria-labelledby="aplikasiModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="kategoriForm">
+                <form id="aplikasiForm">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="kategoriModalLabel">Tambah Kategori</h5>
+                        <h5 class="modal-title" id="aplikasiModalLabel">Tambah Aplikasi</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="namaKategori" class="form-label">Nama Kategori</label>
-                            <input type="text" name="namaKategori" class="form-control" id="namaKategori" required>
-                            <input type="hidden" name="kategori_id" id="kategori_id">
+                            <label for="namaAplikasi" class="form-label">Nama Aplikasi</label>
+                            <input type="text" name="namaAplikasi" class="form-control" id="namaAplikasi" required>
+                            <input type="hidden" name="aplikasi_id" id="aplikasi_id">
                         </div>
+                        <div class="mb-3">
+                            <label for="keterangan" class="form-label">Keterangan</label>
+                            <input type="text" name="keterangan" class="form-control" id="keterangan" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="url" class="form-label">URL</label>
+                            <input type="text" name="url" class="form-control" id="url" required>
+                       </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-select" required>
+                                <option value="aktif">Aktif</option>
+                                <option value="nonaktif">Tidak Aktif</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">Save</button>
@@ -67,13 +86,10 @@
 @push('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
-            $.fn.DataTable.ext.pager.numbers_length = 4;
-
             var table = $('.tabel').DataTable({
                 processing: true,
                 serverSide: true,
                 lengthMenu: [5, 10, 25, 50, 100],
-                order: [],
                 language: {
                     paginate: {
                         previous: '<span class="prev-icon page-link" >‹</span>',
@@ -82,10 +98,14 @@
                     search: ''
                 },
                 dom: 'lrtip',
-                ajax: "{{ route('kategori.index') }}",
+                ajax: "{{ route('manajemen-aplikasi.index') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'namaKategori', name: 'namaKategori', order: true},
+                    {data: 'namaAplikasi', name: 'namaAplikasi'},
+                    {data: 'keterangan', name: 'keterangan'},
+                    {data: 'kelola_tim', name: 'kelola_tim', orderable: false, searchable: false},
+                    {data: 'kelola_dokumen', name: 'kelola_dokumen', orderable: false, searchable: false},
+                    {data: 'kelola_alur', name: 'kelola_alur', orderable: false, searchable: false},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 drawCallback: function(settings) {
@@ -97,28 +117,30 @@
                 table.search(this.value).draw();
             });
 
-            $('#addNewKatBtn').click(function () {
-                $('#kategoriModalLabel').text('Tambah Kategori');
-                $('#kategoriForm')[0].reset();
-                $('#kategori_id').val('');
-                $('#kategoriModal').modal('show');
+            $('#addNewAplikasiBtn').click(function () {
+                $('#aplikasiModalLabel').text('Tambah Aplikasi');
+                $('#aplikasiForm')[0].reset();
+                $('#aplikasi_id').val('');
+                $('#aplikasiModal').modal('show');
             });
 
-            $('#kategoriForm').submit(function (e) {
+            $('#aplikasiForm').submit(function (e) {
                 e.preventDefault();
-                var id = $('#kategori_id').val();
-                var url = id ? '{{ route("kategori.update", ":id") }}'.replace(':id', id) : '{{ route("kategori.store") }}';
+                console.log($(this).serialize());
+                var id = $('#aplikasi_id').val();
+                var url = id ? '{{ route("manajemen-aplikasi.update", ":id") }}'.replace(':id', id) : '{{ route("manajemen-aplikasi.store") }}';
                 var method = id ? 'PUT' : 'POST';
                 $.ajax({
                     url: url,
                     method: method,
                     data: $(this).serialize(),
                     success: function (response) {
-                        $('#kategoriModal').modal('hide');
+                        $('#aplikasiModal').modal('hide');
                         table.ajax.reload();
                         toastr.success(response.success);
                     },
                     error: function (error) {
+                        console.log(error.responseJSON);
                         toastr.error('Something went wrong!');
                     }
                 });
@@ -126,11 +148,17 @@
 
             $(document).on('click', '.edit', function () {
                 var id = $(this).data('id');
-                var namaKategori = $(this).data('namakategori');
-                $('#kategoriModalLabel').text('Edit Kategori');
-                $('#kategori_id').val(id);
-                $('#namaKategori').val(namaKategori);
-                $('#kategoriModal').modal('show');
+                var namaAplikasi = $(this).data('namaaplikasi');
+                var keterangan = $(this).data('keterangan');
+                var url = $(this).data('url');
+                var status = $(this).data('status');
+                $('#aplikasiModalLabel').text('Edit Aplikasi');
+                $('#aplikasi_id').val(id);
+                $('#namaAplikasi').val(namaAplikasi);
+                $('#keterangan').val(keterangan);
+                $('#url').val(url);
+                $('#status').val(status);
+                $('#aplikasiModal').modal('show');
             });
 
             $(document).on('click', '.delete', function () {
@@ -147,7 +175,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '{{ route("kategori.destroy", ":id") }}'.replace(':id', id),
+                            url: '{{ route("manajemen-aplikasi.destroy", ":id") }}'.replace(':id', id),
                             method: 'DELETE',
                             data: {
                                 _token: '{{ csrf_token() }}'

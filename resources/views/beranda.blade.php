@@ -60,10 +60,8 @@
         <div class="container text-center">
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <h1 data-aos="fade-up">Selamat Datang di <span>SIPENA</span></h1>
-                <p data-aos="fade-up" data-aos-delay="100">
-                    Quickly start your project now and set the stage for success
-                </p>
-                <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+                <p data-aos="fade-up" data-aos-delay="100">Aplikasi layanan terkait permohonan pembuatan aplikasi.</p>
+                <!-- <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="btn-get-started">Logout</button>
@@ -72,14 +70,14 @@
                     <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center">
                         <i class="bi bi-play-circle"></i><span>Watch Video</span>
                     </a>
-                </div>
+                </div> -->
                 <img src="{{ asset('main_assets/img/hero-services-img.webp') }}" class="img-fluid hero-img" alt="" data-aos="zoom-out" data-aos-delay="300">
             </div>
         </div>
     </section><!-- /Hero Section -->
 
     <!-- Featured Services Section -->
-    <section id="featured-services" class="featured-services section light-background">
+    <!-- <section id="featured-services" class="featured-services section light-background">
         <div class="container">
             <div class="row gy-4">
                 @foreach ($services as $service)
@@ -95,10 +93,11 @@
                 @endforeach
             </div>
         </div>
-    </section><!-- /Featured Services Section -->
+    </section> -->
+    <!-- /Featured Services Section -->
 
     <!-- About Section -->
-    <section id="about" class="about section">
+    <!-- <section id="about" class="about section">
         <div class="container">
             <div class="row gy-4">
                 <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
@@ -134,10 +133,11 @@
                 </div>
             </div>
         </div>
-    </section><!-- /About Section -->
+    </section> -->
+    <!-- /About Section -->
 
     <!-- Clients Section -->
-    <section id="clients" class="clients section">
+    <!-- <section id="clients" class="clients section">
         <div class="container" data-aos="fade-up">
             <div class="row gy-4">
                 @foreach ($clients as $client)
@@ -147,7 +147,8 @@
                 @endforeach
             </div>
         </div>
-    </section><!-- /Clients Section -->
+    </section> -->
+    <!-- /Clients Section -->
 
     <!-- Additional Sections -->
     <!-- Repeat similar conversions for other sections -->

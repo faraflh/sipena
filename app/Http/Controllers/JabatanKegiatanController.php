@@ -7,21 +7,50 @@ use App\Models\Kategori;
 use App\Models\JabatanStatus;
 use App\Models\JabatanKegiatan;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class JabatanKegiatanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $jabatanKegiatan = JabatanKegiatan::paginate(5);
+        if ($request->ajax()) {
+            $jabatanKegiatan = JabatanKegiatan::with(['pegawai', 'kategori', 'jabatanStatus'])->get();
+            return DataTables::of($jabatanKegiatan)
+                ->addIndexColumn()
+                ->addColumn('pegawai', function ($row) {
+                    return $row->pegawai->nama ?? '-';
+                })
+                ->addColumn('kategori', function ($row) {
+                    return $row->kategori->namaKategori ?? '-';
+                })
+                ->addColumn('jabatan_status', function ($row) {
+                    return $row->jabatanStatus->namaJabatanStatus ?? '-';
+                })
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '
+                        <a href="javascript:void(0)" class="delete text-danger cursor-pointer" data-id="' . $row->id . '">
+                            <i class="fas fa-trash-alt" title="Delete"></i>
+                        </a>
+                        <a href="javascript:void(0)" class="edit ms-4 text-dark cursor-pointer" data-id="' . $row->id . '"
+                            data-pegawai_id="' . $row->pegawai_id . '"
+                            data-kategori_id="' . $row->kategori_id . '"
+                            data-jabatan_status_id="' . $row->jabatan_status_id . '">
+                            <i class="fas fa-pencil-alt" title="Edit"></i>
+                        </a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
         $pegawai = Pegawai::all();
         $kategori = Kategori::all();
         $jabatanStatus = JabatanStatus::all();
         return view('jabatanKegiatan', [
-            'jabatanKegiatan' => $jabatanKegiatan,
+            'currentPage' => 'Jabatan Kegiatan',
             'pegawai' => $pegawai,
             'kategori' => $kategori,
             'jabatanStatus' => $jabatanStatus,
-            'currentPage' => 'Jabatan Kegiatan', 
         ]);
     }
 
@@ -38,7 +67,13 @@ class JabatanKegiatanController extends Controller
             'kategori_id' => $request->kategori_id,
             'jabatan_status_id' => $request->jabatan_status_id,
         ]);
-        return redirect()->route('jabatanKegiatan.index')->with('success', 'Jabatan Kegiatan created successfully.');
+        return response()->json(['success' => 'Data berhasil ditambah!']);
+    }
+
+    public function edit($id)
+    {
+        $jabatanKegiatan = JabatanKegiatan::findOrFail($id);
+        return response()->json($jabatanKegiatan);
     }
 
     public function update(Request $request, $id)
@@ -50,13 +85,18 @@ class JabatanKegiatanController extends Controller
         ]);
 
         $jabatanKegiatan = JabatanKegiatan::findOrFail($id);
-        $jabatanKegiatan->update($request->all());
-        return redirect()->route('jabatanKegiatan.index')->with('error', 'Jabatan Kegiatan update failed.');
+        $jabatanKegiatan->update([
+            'pegawai_id' => $request->pegawai_id,
+            'kategori_id' => $request->kategori_id,
+            'jabatan_status_id' => $request->jabatan_status_id,
+        ]);
+
+        return response()->json(['success' => 'Data berhasil diubah!']);
     }
 
     public function destroy($id)
     {
         JabatanKegiatan::destroy($id);
-        return redirect()->route('jabatanKegiatan.index')->with('success', 'Jabatan Kegiatan deleted successfully.');
+        return response()->json(['success' => 'Data berhasil dihapus!']);
     }
 }

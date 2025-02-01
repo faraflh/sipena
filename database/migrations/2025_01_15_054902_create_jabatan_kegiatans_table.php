@@ -12,15 +12,10 @@ return new class extends Migration {
     {
         Schema::create('jabatan_kegiatans', function (Blueprint $table) {
             $table->id();
-//            $table->unsignedBigInteger('idPegawai');
-//            $table->unsignedBigInteger('idKategori');
             $table->foreignIdFor(Pegawai::class);
             $table->foreignIdFor(Kategori::class);
             $table->foreignIdFor(JabatanStatus::class);
             $table->timestamps();
-
-//            $table->foreign('idPegawai')->references('id')->on('pegawais')->onDelete('cascade');
-//            $table->foreign('idKategori')->references('id')->on('kategoris')->onDelete('cascade');
         });
     }
 

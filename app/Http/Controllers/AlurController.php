@@ -4,17 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Alur;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class AlurController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $alur = Alur::paginate(5);
+        if (request()->ajax()) {
+            $alur = Alur::all();
+            return DataTables::of($alur)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '
+                <a href="javascript:void(0)" class="delete text-danger cursor-pointer" data-id="' . $row->id . '"> <i class="fas fa-trash-alt" title="Delete"></i> </a>
+                <a href="javascript:void(0)" class="edit  ms-4 text-dark cursor-pointer" data-id="' . $row->id . '" data-namaAlur="' . $row->namaAlur . '"> <i class="fas fa-pencil-alt" title="Edit"></i> </a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
 
-        return view('alur', [
-            'alur' => $alur,
-            'currentPage' => 'Alur', 
-        ]);
+        return view('alur', [ 'currentPage' => 'Alur', ]);
     }
 
     public function store(Request $request)
@@ -22,16 +33,18 @@ class AlurController extends Controller
         $request->validate([
             'namaAlur' => 'required|string|max:30',
         ]);
-
-        Alur::create($request->all());
-        return redirect()->route('alur.index')->with('success', 'Alur created successfully.');
+        
+        Alur::create([
+            'namaAlur' => $request->namaAlur,
+        ]);
+        return response()->json(['success' => 'Data berhasil ditambah!']);
     }
 
-//    public function show($id)
-//    {
-//        $alur = Alur::findOrFail($id);
-//        return response()->json($alur);
-//    }
+    public function edit($id)
+    {
+        $alur = Alur::find($id);
+        return response()->json($alur);
+    }
 
     public function update(Request $request, $id)
     {
@@ -39,14 +52,17 @@ class AlurController extends Controller
             'namaAlur' => 'required|string|max:30',
         ]);
 
-        $alur = Alur::findOrFail($id);
-        $alur->update($request->all());
-        return redirect()->route('alur.index')->with('error', 'Alur update failed.');
+        $alur = Alur::find($id);
+        $alur->update([
+            'namaAlur' => $request->namaAlur,
+        ]);
+
+        return response()->json(['success' => 'Data berhasil diubah!']);
     }
 
     public function destroy($id)
     {
         Alur::destroy($id);
-        return redirect()->route('alur.index')->with('success', 'Alur deleted successfully.');
+        return response()->json(['success' => 'Data deleted successfully!']);
     }
 }
