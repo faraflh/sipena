@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Aplikasi;
 use App\Models\DetailAlur;
+<<<<<<< HEAD
 use App\Models\DetailDokumen;
 use App\Models\DetailTim;
 use App\Models\Alur;
 use App\Models\Dokumen;
 use App\Models\Pegawai;
 use App\Models\JabatanKegiatan;
+=======
+use App\Models\Alur;
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -59,30 +63,44 @@ class AplikasiController extends Controller
     public function showDetailTim($id)
     {
         $aplikasi = Aplikasi::with('detailTim')->find($id);
+<<<<<<< HEAD
         $pegawai = Pegawai::all();
         $jabatanKegiatan = JabatanKegiatan::all();
+=======
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
 
         if (!$aplikasi || !$aplikasi->detailTim) {
             return redirect()->back()->with('error', 'Detail Tim tidak ditemukan.');
         }
 
         return view('manajemen-aplikasi.detailTim', [
+<<<<<<< HEAD
             'currentPage' => 'Detail Tim',
             'aplikasi' => $aplikasi,
             'pegawai' => $pegawai,
             'jabatanKegiatan' => $jabatanKegiatan
+=======
+            'currentPage' => 'Detail Alur',
+            'detailTim' => $aplikasi->detailTim,
+            'aplikasi' => $aplikasi
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
         ]);
     }
 
     public function detailTim($id)
     {
         $aplikasi = Aplikasi::findOrFail($id);
+<<<<<<< HEAD
         $pegawai = Pegawai::all();
         $jabatanKegiatan = JabatanKegiatan::all();
+=======
+        $tim = $aplikasi->tim; 
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
 
         return view('manajemen-aplikasi.detailTim', [
             'currentPage' => 'Detail Tim',
             'aplikasi' => $aplikasi,
+<<<<<<< HEAD
             'pegawai' => $pegawai,
             'namaAplikasi' => $aplikasi->namaAplikasi,
             'jabatanKegiatan' => $jabatanKegiatan,
@@ -132,6 +150,12 @@ class AplikasiController extends Controller
         ->rawColumns(['action' ])
         ->make(true);
     }
+=======
+            'tim' => $tim
+        ]);
+    }
+
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
     
     public function showDetailDokumen($id)
     {
@@ -141,16 +165,22 @@ class AplikasiController extends Controller
             return redirect()->back()->with('error', 'Detail Dokumen tidak ditemukan.');
         }
     
+<<<<<<< HEAD
         return view('manajemen-aplikasi.detailDokumen', [
             'currentPage' => 'Detail Dokumen',
             'detailDokumen' => $aplikasi->detailDokumen, 
             'aplikasi' => $aplikasi
+=======
+        return view('manajemen-aplikasi.detailDokumen', ['detailDokumen' => $aplikasi->detailDokumen, 'currentPage' => 'Detail Dokumen',
+        'aplikasi' => $aplikasi,
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
     ]);
     }
 
     public function detailDokumen($id)
     {
         $aplikasi = Aplikasi::findOrFail($id);
+<<<<<<< HEAD
         $dokumen = Dokumen::all();
 
         return view('manajemen-aplikasi.detailDokumen', [
@@ -208,6 +238,15 @@ class AplikasiController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
+=======
+        $dokumen = $aplikasi->dokumen;
+
+        return view('manajemen-aplikasi.detailDokumen', ['currentPage' => 'Detail Dokumen',
+            'aplikasi' => $aplikasi,
+            'dokumen' => $dokumen
+        ]);
+    }
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
     
     public function showDetailAlur($id)
     {
@@ -235,6 +274,10 @@ class AplikasiController extends Controller
             'namaAplikasi' => $aplikasi->namaAplikasi,
             'alur' => $alur,
             'aplikasi_id' => $id 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
         ]);
     }
 
@@ -251,11 +294,14 @@ class AplikasiController extends Controller
             ->addColumn('alur', function ($row) {
                 return $row->alur->namaAlur ?? '-';
             })
+<<<<<<< HEAD
             ->filterColumn('alur', function ($q, $keyword) {
                 $q->whereHas('alur', function ($q2) use ($keyword) {
                     $q2->where('namaAlur', 'like', "%{$keyword}%");
                 });
             })
+=======
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
             ->addColumn('action', function ($row) {
                 return '
                 <a href="javascript:void(0)" class="delete text-danger cursor-pointer" 

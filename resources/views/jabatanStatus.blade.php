@@ -8,6 +8,7 @@
                 <div class="col-6 d-flex align-items-center">
                     <h5 class="mb-0">Jabatan Status</h5>
                 </div>
+<<<<<<< HEAD
                 <div class="col-6 d-flex align-items-center justify-content-end flex-nowrap">
                     <div class="d-inline-block w-auto position-relative">
                         <i class="fas fa-search position-absolute search-icon"></i>
@@ -15,6 +16,15 @@
                     </div>
                     <button class="btn bg-gradient-dark mb-0 ms-2" data-bs-toggle="modal" id="addNewJabatanStatusBtn" data-bs-target="#createModal">
                        <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Jabatan Status
+=======
+                <div class="col-6 text-end">
+                    <div class="d-inline-block position-relative">
+                        <i class="fas fa-search position-absolute search-icon"></i>
+                        <input type="text" id="customSearch" class="form-control d-inline" placeholder="Search...">
+                    </div>
+                    <button class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" id="addNewJabatanStatusBtn" data-bs-target="#createModal">
+                       <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Jabatan Status Baru
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
                     </button>
                 </div>
             </div>

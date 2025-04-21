@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailDokumen;
+<<<<<<< HEAD
 use App\Models\Aplikasi;
+=======
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
 use App\Models\Dokumen;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class DetailDokumenController extends Controller
 {
+<<<<<<< HEAD
     public function index(Request $request, $id)
     {
         if ($request->ajax()) {
@@ -54,10 +58,31 @@ class DetailDokumenController extends Controller
             'aplikasi' => $aplikasi,
             'dokumen' => $dokumen,
         ]);
+=======
+    public function index()
+    {
+        $dokumen = Dokumen::all();
+        return view('manajemen-aplikasi.detailDokumen', compact('dokumen'));
+    }
+
+    public function data()
+    {
+        $detailDokumen = DetailDokumen::with('dokumen')->get();
+        return DataTables::of($detailDokumen)
+            ->addIndexColumn()
+            ->addColumn('dokumen', fn($row) => $row->dokumen->namaDokumen ?? '-')
+            ->addColumn('action', function($row) {
+                return '<button class="edit btn btn-warning" data-id="'.$row->id.'" data-dokumen_id="'.$row->dokumen_id.'" data-deskripsi="'.$row->deskripsi.'">Edit</button>
+                        <button class="delete btn btn-danger" data-id="'.$row->id.'">Delete</button>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
     }
 
     public function store(Request $request)
     {
+<<<<<<< HEAD
         $request->validate([
             'aplikasi_id' => 'required|exists:aplikasis,id',
             'namaDokumen' => 'required|string',
@@ -94,10 +119,15 @@ class DetailDokumenController extends Controller
     {
         $detailDokumen = DetailDokumen::findOrFail($id);
         return response()->json($detailDokumen);
+=======
+        DetailDokumen::create($request->all());
+        return response()->json(['success' => 'Data berhasil ditambahkan!']);
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
     }
 
     public function update(Request $request, $id)
     {
+<<<<<<< HEAD
         $request->validate([
             'aplikasi_id' => 'required|exists:aplikasis,id',
             'namaDokumen' => 'required|string',
@@ -112,6 +142,10 @@ class DetailDokumenController extends Controller
         $detailDokumen->update($request->all());
 
         return response()->json(['success' => 'Data berhasil diubah!']);
+=======
+        DetailDokumen::findOrFail($id)->update($request->all());
+        return response()->json(['success' => 'Data berhasil diupdate!']);
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
     }
 
     public function destroy($id)
@@ -119,4 +153,8 @@ class DetailDokumenController extends Controller
         DetailDokumen::destroy($id);
         return response()->json(['success' => 'Data berhasil dihapus!']);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2

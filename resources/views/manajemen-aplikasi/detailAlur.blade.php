@@ -7,6 +7,7 @@
         <div class="card-header pb-0 p-3">
             <div class="row">
                 <div class="col-6 d-flex align-items-center">
+<<<<<<< HEAD
                     <h5 class="mb-0">Detail Alur / {{ $namaAplikasi }}</h5>
                     <h5 class="mb-0"></h5>
                 </div>
@@ -16,6 +17,17 @@
                         <input type="text" id="customSearch" class="form-control d-inline" placeholder="Search...">
                     </div>
                     <button class="btn bg-gradient-dark mb-0 ms-2" id="addNewDetailAlurBtn" data-bs-toggle="modal" data-bs-target="#detailAlurModal">
+=======
+                    <h5 class="mb-0 ">Detail Alur / {{ $namaAplikasi }}</h5>
+                    <h5 class="mb-0"></h5>
+                </div>
+                <div class="col-6 text-end"> 
+                    <div class="d-inline-block position-relative">
+                        <i class="fas fa-search position-absolute search-icon"></i>
+                        <input type="text" id="customSearch" class="form-control d-inline" placeholder="Search...">
+                    </div>
+                    <button class="btn bg-gradient-dark mb-0" id="addNewDetailAlurBtn" data-bs-toggle="modal" data-bs-target="#detailAlurModal">
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
                         <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Detail Alur Baru
                     </button>
                 </div>
@@ -27,7 +39,11 @@
                 <thead>
                             <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+<<<<<<< HEAD
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Alur <i class="fas fa-sort"></i> </th>
+=======
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Alur </th>
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Keterangan Alur </th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Aksi </th>
                             </tr>
@@ -84,9 +100,16 @@
 @push('scripts')
 <script type="text/javascript">
     $(document).ready(function() {
+<<<<<<< HEAD
     $.fn.DataTable.ext.pager.numbers_length = 4;
     var aplikasi_id = "{{ $aplikasi_id }}"; 
 
+=======
+    var aplikasi_id = "{{ $aplikasi_id }}"; 
+
+    console.log(@json($alur));
+
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
     var table = $('.tabel').DataTable({
         processing: true,
         serverSide: true,
@@ -105,8 +128,13 @@
             type: "GET",
         },
         columns: [
+<<<<<<< HEAD
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
             { data: 'alur', name: 'alur', orderable: true, searchable: true },
+=======
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'alur', name: 'alur_id', orderable: true },
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
             { data: 'keterangan_alur', name: 'keterangan_alur', orderable: true },
             { data: 'action', name: 'action', orderable: false, searchable: false },
         ],

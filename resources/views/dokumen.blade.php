@@ -9,12 +9,21 @@
                     <div class="col-6 d-flex align-items-center">
                         <h5 class="mb-0">Dokumen</h5>
                     </div>
+<<<<<<< HEAD
                     <div class="col-6 d-flex align-items-center justify-content-end flex-nowrap"> 
                         <div class="d-inline-block w-auto position-relative">
                             <i class="fas fa-search position-absolute search-icon"></i>
                             <input type="text" id="customSearch" class="form-control d-inline border-start-0" placeholder="Search...">
                         </div>
                         <button class="btn bg-gradient-dark mb-0 ms-2" data-bs-toggle="modal" id="addNewDocBtn" data-bs-target="#createModal">
+=======
+                    <div class="col-6 text-end"> 
+                        <div class="d-inline-block position-relative">
+                            <i class="fas fa-search position-absolute search-icon"></i>
+                            <input type="text" id="customSearch" class="form-control d-inline border-start-0" placeholder="Search...">
+                        </div>
+                        <button class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" id="addNewDocBtn" data-bs-target="#createModal">
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
                            <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Dokumen Baru
                         </button>
                     </div>
@@ -26,9 +35,15 @@
                         <thead>
                             <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+<<<<<<< HEAD
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Kategori <i class="fas fa-sort"></i> </th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Alur <i class="fas fa-sort"></i> </th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Jenis Dokumen <i class="fas fa-sort"></i> </th>
+=======
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Kategori </th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Alur </th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Jenis Dokumen </th>
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Aksi </th>
                             </tr>
                         </thead>
@@ -103,9 +118,15 @@
                 ajax: "{{ route('dokumen.index') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+<<<<<<< HEAD
                     {data: 'kategori', name: 'kategori', orderable: true},
                     {data: 'alur', name: 'alur', orderable: true},
                     {data: 'jenisDokumen', name: 'jenisDokumen', orderable: true},
+=======
+                    {data: 'kategori', name: 'kategori'},
+                    {data: 'alur', name: 'alur'},
+                    {data: 'jenisDokumen', name: 'jenisDokumen'},
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 drawCallback: function(settings) {

@@ -8,6 +8,7 @@
             <div class="row">
                 <div class="col-6 d-flex align-items-center">
                     <h5 class="mb-0">DPA</h5>
+<<<<<<< HEAD
                 </div>
                 <div class="col-6 d-flex align-items-center justify-content-end flex-nowrap">
                     <div class="d-inline-block w-auto position-relative">
@@ -18,6 +19,18 @@
                         <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah DPA Baru
                     </button>
                 </div>
+=======
+                </div>
+                <div class="col-6 text-end">
+                    <div class="d-inline-block position-relative">
+                        <i class="fas fa-search position-absolute search-icon"></i>
+                        <input type="text" id="customSearch" class="form-control d-inline border-start-0" placeholder="Search...">
+                    </div>
+                    <button class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" id="addNewDpaBtn" data-bs-target="#createModal">
+                        <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah DPA Baru
+                    </button>
+                </div>
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
             </div>
         </div>
         <div class="card-body px-0 pb-2">
@@ -26,9 +39,15 @@
                     <thead>
                         <tr>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+<<<<<<< HEAD
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No. DPA <i class="fas fa-sort"></i> </th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tujuan</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sub Kegiatan <i class="fas fa-sort"></i> </th>
+=======
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No. DPA</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tujuan</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sub Kegiatan</th>
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                         </tr>
                     </thead>
@@ -96,7 +115,10 @@
 @push('scripts')
 <script type="text/javascript">
     $(document).ready(function() {
+<<<<<<< HEAD
         $.fn.DataTable.ext.pager.numbers_length = 4;
+=======
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
         var table = $('.tabel').DataTable({
             processing: true,
             serverSide: true,
@@ -116,8 +138,12 @@
                 },
                 {
                     data: 'noDPA',
+<<<<<<< HEAD
                     name: 'noDPA',
                     orderable: true
+=======
+                    name: 'noDPA'
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
                 },
                 {
                     data: 'tujuan',
@@ -125,8 +151,12 @@
                 },
                 {
                     data: 'subKeg',
+<<<<<<< HEAD
                     name: 'subKeg',
                     orderable: true
+=======
+                    name: 'subKeg'
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
                 },
                 {
                     data: 'action',

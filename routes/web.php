@@ -33,25 +33,36 @@ Route::get('/permohonan', function () {
     return view('permohonan');
 });
 
+<<<<<<< HEAD
+=======
+Route::get('/manajemen-aplikasi/{id}/tim', [AplikasiController::class, 'detailTim'])
+    ->name('manajemen-aplikasi.detailTim');
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
 
 Route::get('/manajemen-aplikasi/{id}/dokumen', [AplikasiController::class, 'detailDokumen'])
 ->name('manajemen-aplikasi.detailDokumen');
 
+<<<<<<< HEAD
 Route::get('/manajemen-aplikasi/{id}/detail-dokumen/data', [AplikasiController::class, 'detailDokumenData'])
     ->name('manajemen-aplikasi.detailDokumenData');
 
+=======
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
 Route::get('/manajemen-aplikasi/{id}/detail-alur', [AplikasiController::class, 'detailAlur'])
     ->name('manajemen-aplikasi.detailAlur');
 
 Route::get('/manajemen-aplikasi/{id}/detail-alur/data', [AplikasiController::class, 'detailAlurData'])
     ->name('manajemen-aplikasi.detailAlurData');
 
+<<<<<<< HEAD
 Route::get('/manajemen-aplikasi/{id}/tim', [AplikasiController::class, 'detailTim'])
     ->name('manajemen-aplikasi.detailTim');
 
 Route::get('/manajemen-aplikasi/{id}/detail-tim/data', [AplikasiController::class, 'detailTimData'])
     ->name('manajemen-aplikasi.detailTimData');
 
+=======
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
 Route::get('/manajemen-aplikasi', function () {return view('dashboard');})->name('manajemen-aplikasi');
 Route::get('/manajemen-administrasi', function () {return view('dashboard');})->name('manajemen-administrasi');
 Route::get('/settings', function () {return view('dashboard');})->name('settings');
@@ -69,8 +80,12 @@ Route::resource('permohonans', PermohonansController::class);
 Route::resource('kegiatan', KegiatanController::class);
 Route::resource('manajemen-aplikasi', AplikasiController::class);
 Route::resource('detailAlur', DetailAlurController::class);
+<<<<<<< HEAD
 Route::resource('detailTim', DetailTimController::class);
 Route::resource('detailDokumen', DetailDokumenController::class);
+=======
+Route::resource('detailDokumen', DetailAlurController::class);
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
 
 Route::prefix('manajemen-aplikasi')->as('manajemen-aplikasi.')->group(function () {
     Route::resource('kegiatan', KegiatanController::class);

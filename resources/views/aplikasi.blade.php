@@ -9,12 +9,21 @@
                     <div class="col-6 d-flex align-items-center">
                         <h5 class="mb-0">Manajemen Aplikasi</h5>
                     </div>
+<<<<<<< HEAD
                     <div class="col-6 text-end d-flex align-items-center justify-content-end flex-nowrap"> 
                         <div class="d-inline-block w-auto position-relative">
                             <i class="fas fa-search position-absolute search-icon"></i>
                             <input type="text" id="customSearch" class="form-control d-inline border-start-0" placeholder="Search...">
                         </div>
                         <button class="btn bg-gradient-dark mb-0 ms-2" data-bs-toggle="modal" id="addNewAplikasiBtn" data-bs-target="#createModal">
+=======
+                    <div class="col-6 text-end"> 
+                        <div class="d-inline-block position-relative">
+                            <i class="fas fa-search position-absolute search-icon"></i>
+                            <input type="text" id="customSearch" class="form-control d-inline border-start-0" placeholder="Search...">
+                        </div>
+                        <button class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" id="addNewAplikasiBtn" data-bs-target="#createModal">
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
                            <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Aplikasi Baru
                         </button>
                     </div>
@@ -26,7 +35,11 @@
                     <thead>
                         <tr>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+<<<<<<< HEAD
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Aplikasi <i class="fas fa-sort"></i> </th>
+=======
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Aplikasi</th>
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kelola Tim</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kelola Dokumen</th>
@@ -86,7 +99,10 @@
 @push('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
+<<<<<<< HEAD
             $.fn.DataTable.ext.pager.numbers_length = 4;
+=======
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
             var table = $('.tabel').DataTable({
                 processing: true,
                 serverSide: true,
@@ -102,7 +118,11 @@
                 ajax: "{{ route('manajemen-aplikasi.index') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+<<<<<<< HEAD
                     {data: 'namaAplikasi', name: 'namaAplikasi', orderable: true},
+=======
+                    {data: 'namaAplikasi', name: 'namaAplikasi'},
+>>>>>>> 0a4e0e5d9a377078fbc7b7afc2985acccd9f77e2
                     {data: 'keterangan', name: 'keterangan'},
                     {data: 'kelola_tim', name: 'kelola_tim', orderable: false, searchable: false},
                     {data: 'kelola_dokumen', name: 'kelola_dokumen', orderable: false, searchable: false},
