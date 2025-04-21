@@ -1,129 +1,176 @@
 @extends('partials.dashboardLayout')
 
 @section('content')
-    <div class="container-fluid py-4">
+
+<div class="container-fluid py-4">
         <div class="card">
             <div class="card-header pb-0 p-3">
                 <div class="row">
                     <div class="col-6 d-flex align-items-center">
                         <h5 class="mb-0">Alur</h5>
                     </div>
-                    <div class="col-6 text-end">
-                        <button class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" data-bs-target="#createModal">
-                            <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Alur Baru
+                    <div class="col-6 d-flex align-items-center justify-content-end flex-nowrap"> 
+                        <div class="d-inline-block w-auto position-relative">
+                            <i class="fas fa-search position-absolute search-icon"></i>
+                            <input type="text" id="customSearch" class="form-control d-inline" placeholder="Search...">
+                        </div>
+                        <button class="btn bg-gradient-dark mb-0 ms-2" data-bs-toggle="modal" id="addNewAlurBtn" data-bs-target="#createModal">
+                           <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Alur Baru
                         </button>
                     </div>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">
                 <div class="table-responsive">
-                    <table class="table alur align-items-center mb-0">
+                    <table class="table tabel align-items-center mb-0">
                         <thead>
-                        <tr>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                No
-                            </th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                Nama Alur
-                            </th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                Aksi
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($alur as $index => $item)
                             <tr>
-                            <td class="text-center">{{ ($alur->currentPage() - 1) * $alur->perPage() + $loop->iteration }}</td>
-                            <td class="text-center text">{{ $item->namaAlur }}</td>
-                                <td class="align-middle text-center">
-                                    <i class="fas fa-trash-alt ms-auto text-danger cursor-pointer"
-                                       data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
-                                       onclick="event.preventDefault(); document.getElementById('delete-form-{{ $item->id }}').submit();"></i>
-
-                                    <form id="delete-form-{{ $item->id }}"
-                                          action="{{ route('alur.destroy', $item->id) }}" method="POST"
-                                          style="display: none;">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-
-                                    <a href="{{ route('alur.update', $item->id) }}" class="edit" data-bs-toggle="modal"
-                                       data-bs-target="#editModal{{ $item->id }}">
-                                        <i class="fas fa-pencil-alt ms-4 text-dark cursor-pointer"
-                                           data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"></i>
-                                    </a>
-
-                                </td>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 sorting" data-sort="namaAlur"> Nama Alur <i class="fas fa-sort"></i> </th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Aksi </th>
                             </tr>
-                            <!-- Edit Modal -->
-                            <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1"
-                                 aria-labelledby="editModalLabel"
-                                 aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <form method="POST" action="{{ route('alur.update', $item->id) }}">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editModalLabel">Edit Alur</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label for="namaAlur{{ $item->id }}" class="form-label">Nama Alur</label>
-                                                    <input type="text" id="namaAlur{{ $item->id }}" name="namaAlur" class="form-control" value="{{ $item->namaAlur }}" required>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                    Cancel
-                                                </button>
-                                                <button type="submit" class="btn btn-info">Save</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                        </tbody>
+                        </thead>
                     </table>
                 </div>
             </div>
-            <div class="card-footer d-flex justify-content-between align-items-baseline">
-                <p class="text-xs font-weight-bold mb-0">Showing {{ $alur->firstItem() }} to {{ $alur->lastItem() }} of {{ $alur->total() }} entries</p>
-                {{ $alur->links('pagination::bootstrap-5') }}
-            </div>
         </div>
 
-        <!-- Create Modal -->
-        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="{{ route('alur.store') }}" method="POST">
-                        @csrf
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="createModalLabel">Add Pegawai</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     <!-- Create Modal -->
+     <div class="modal fade" id="alurModal" tabindex="-1" aria-labelledby="alurModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="alurForm">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="alurModalLabel">Tambah Alur</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="namaAlur" class="form-label">Nama Alur</label>
+                            <input type="text" name="namaAlur" class="form-control" id="namaAlur" required>
+                            <input type="hidden" name="alur_id" id="alur_id">
                         </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="nama alur" class="form-label">Nama Alur</label>
-                                <input type="text" name="namaAlur" class="form-control" required>
-                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success">Add</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </form>
             </div>
+        </div>
         </div>
     </div>
+
 @endsection
 
-{{--@extends('partials.dbFooter')--}}
+@push('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.fn.DataTable.ext.pager.numbers_length = 4;
+
+            var table = $('.tabel').DataTable({
+                processing: true,
+                serverSide: true,
+                lengthMenu: [5, 10, 25, 50, 100],
+                order: [],
+                language: {
+                    paginate: {
+                        previous: '<span class="prev-icon page-link" >‹</span>',
+                        next: '<span class="next-icon page-link" >›</span>',
+                    },
+                    search: ''
+                },
+                dom: 'lrtip',
+                ajax: "{{ route('alur.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false},
+                    {data: 'namaAlur', name: 'namaAlur', orderable: true},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ],
+                drawCallback: function(settings) {
+                    $('.dataTables_paginate').find(' span a.paginate_button').addClass('page-link');
+                }
+            });
+
+            $('#customSearch').on('keyup', function() {
+                table.search(this.value).draw();
+            });
+
+            $('#addNewAlurBtn').click(function () {
+                $('#alurModalLabel').text('Tambah Alur');
+                $('#alurForm')[0].reset();
+                $('#alur_id').val('');
+                $('#alurModal').modal('show');
+            });
+
+            $('#alurForm').submit(function (e) {
+                e.preventDefault();
+                var id = $('#alur_id').val();
+                var url = id ? '{{ route("alur.update", ":id") }}'.replace(':id', id) : '{{ route("alur.store") }}';
+                var method = id ? 'PUT' : 'POST';
+                $.ajax({
+                    url: url,
+                    method: method,
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $('#alurModal').modal('hide');
+                        table.ajax.reload();
+                        toastr.success(response.success);
+                    },
+                    error: function (error) {
+                        toastr.error('Something went wrong!');
+                    }
+                });
+            });
+
+            $(document).on('click', '.edit', function () {
+                var id = $(this).data('id');
+                var namaAlur = $(this).data('namaalur');
+                $('#alurModalLabel').text('Edit Alur');
+                $('#alur_id').val(id);
+                $('#namaAlur').val(namaAlur);
+                $('#alurModal').modal('show');
+            });
+
+            $(document).on('click', '.delete', function () {
+                var id = $(this).data('id');
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Data ini akan dihapus secara permanen!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#388da8',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route("alur.destroy", ":id") }}'.replace(':id', id),
+                            method: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function (response) {
+                                table.ajax.reload();
+                                Swal.fire(
+                                    'Terhapus!',
+                                    'Data berhasil dihapus.',
+                                    'success'
+                                );
+                            },
+                            error: function (error) {
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Terjadi kesalahan saat menghapus data.',
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

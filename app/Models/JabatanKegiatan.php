@@ -29,4 +29,8 @@ class JabatanKegiatan extends Model
     {
         return $this->belongsTo(JabatanStatus::class);
     }
+    public function detailTim()
+    {
+        return $this->hasMany(DetailTim::class);
+    }
 }

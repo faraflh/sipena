@@ -1,109 +1,176 @@
 @extends('partials.dashboardLayout')
 
 @section('content')
-    <div class="container-fluid py-4">
+
+<div class="container-fluid py-4">
         <div class="card">
             <div class="card-header pb-0 p-3">
                 <div class="row">
                     <div class="col-6 d-flex align-items-center">
                         <h5 class="mb-0">Kategori</h5>
                     </div>
-                    <div class="col-6 text-end">
-                        <button class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" data-bs-target="#createModal">
-                            <i class="fas fa-plus"></i>&nbsp;&nbsp; Tambah Kategori Baru
+                    <div class="col-6 d-flex align-items-center justify-content-end flex-nowrap"> 
+                        <div class="d-inline-block w-auto position-relative">
+                            <i class="fas fa-search position-absolute search-icon"></i>
+                            <input type="text" id="customSearch" class="form-control d-inline " placeholder="Search...">
+                        </div>
+                        <button class="btn bg-gradient-dark mb-0 ms-2" data-bs-toggle="modal" id="addNewKatBtn" data-bs-target="#createModal">
+                           <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Kategori Baru
                         </button>
                     </div>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">
                 <div class="table-responsive">
-                    <table class="table align-items-center mb-0">
+                    <table class="table tabel align-items-center mb-0">
                         <thead>
-                        <tr>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Kategori</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($kategori as $index => $kategoris)
                             <tr>
-                            <td class="text-center">{{ ($kategori->currentPage() - 1) * $kategori->perPage() + $loop->iteration }}</td>
-                            <td class="text-center">{{ $kategoris->namaKategori }}</td>
-                                <td class="text-center">
-                                    <i class="fas fa-trash-alt text-danger cursor-pointer"
-                                       onclick="event.preventDefault(); document.getElementById('delete-form-{{ $kategoris->id }}').submit();"
-                                       title="Delete"></i>
-                                    <form id="delete-form-{{ $kategoris->id }}" action="{{ route('kategori.destroy', $kategoris->id) }}" method="POST" style="display: none;">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editModal{{ $kategoris->id }}">
-                                        <i class="fas fa-pencil-alt ms-4 text-dark cursor-pointer" title="Edit"></i>
-                                    </a>
-                                </td>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Nama Kategori <i class="fas fa-sort"></i> </th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Aksi </th>
                             </tr>
-
-                            <!-- Edit Modal -->
-                            <div class="modal fade" id="editModal{{ $kategoris->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $kategoris->id }}" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <form action="{{ route('kategori.update', $kategoris->id) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editModalLabel{{ $kategoris->id }}">Edit Kategori</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label for="namaKategori" class="form-label">Nama Kategori</label>
-                                                    <input type="text" name="namaKategori" class="form-control" value="{{ $kategoris->namaKategori }}" required>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                <button type="submit" class="btn btn-info">Save</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                        </tbody>
+                        </thead>
                     </table>
                 </div>
             </div>
-            <div class="card-footer d-flex justify-content-between align-items-baseline">
-                <p class="text-xs font-weight-bold mb-0">Showing {{ $kategori->firstItem() }} to {{ $kategori->lastItem() }} of {{ $kategori->total() }} entries</p>
-                {{ $kategori->links('pagination::bootstrap-5') }}
-            </div>
         </div>
 
-        <!-- Create Modal -->
-        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="{{ route('kategori.store') }}" method="POST">
-                        @csrf
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="createModalLabel">Tambah Kategori</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     <!-- Create Modal -->
+     <div class="modal fade" id="kategoriModal" tabindex="-1" aria-labelledby="kategoriModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="kategoriForm">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="kategoriModalLabel">Tambah Kategori</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="namaKategori" class="form-label">Nama Kategori</label>
+                            <input type="text" name="namaKategori" class="form-control" id="namaKategori" required>
+                            <input type="hidden" name="kategori_id" id="kategori_id">
                         </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="namaKategori" class="form-label">Nama Kategori</label>
-                                <input type="text" name="namaKategori" class="form-control" required>
-                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success">Add</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </form>
             </div>
         </div>
+        </div>
     </div>
+
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.fn.DataTable.ext.pager.numbers_length = 4;
+
+            var table = $('.tabel').DataTable({
+                processing: true,
+                serverSide: true,
+                lengthMenu: [5, 10, 25, 50, 100],
+                order: [],
+                language: {
+                    paginate: {
+                        previous: '<span class="prev-icon page-link" >‹</span>',
+                        next: '<span class="next-icon page-link" >›</span>',
+                    },
+                    search: ''
+                },
+                dom: 'lrtip',
+                ajax: "{{ route('kategori.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'namaKategori', name: 'namaKategori', order: true},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ],
+                drawCallback: function(settings) {
+                    $('.dataTables_paginate').find(' span a.paginate_button').addClass('page-link');
+                }
+            });
+
+            $('#customSearch').on('keyup', function() {
+                table.search(this.value).draw();
+            });
+
+            $('#addNewKatBtn').click(function () {
+                $('#kategoriModalLabel').text('Tambah Kategori');
+                $('#kategoriForm')[0].reset();
+                $('#kategori_id').val('');
+                $('#kategoriModal').modal('show');
+            });
+
+            $('#kategoriForm').submit(function (e) {
+                e.preventDefault();
+                var id = $('#kategori_id').val();
+                var url = id ? '{{ route("kategori.update", ":id") }}'.replace(':id', id) : '{{ route("kategori.store") }}';
+                var method = id ? 'PUT' : 'POST';
+                $.ajax({
+                    url: url,
+                    method: method,
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $('#kategoriModal').modal('hide');
+                        table.ajax.reload();
+                        toastr.success(response.success);
+                    },
+                    error: function (error) {
+                        toastr.error('Something went wrong!');
+                    }
+                });
+            });
+
+            $(document).on('click', '.edit', function () {
+                var id = $(this).data('id');
+                var namaKategori = $(this).data('namakategori');
+                $('#kategoriModalLabel').text('Edit Kategori');
+                $('#kategori_id').val(id);
+                $('#namaKategori').val(namaKategori);
+                $('#kategoriModal').modal('show');
+            });
+
+            $(document).on('click', '.delete', function () {
+                var id = $(this).data('id');
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Data ini akan dihapus secara permanen!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#388da8',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route("kategori.destroy", ":id") }}'.replace(':id', id),
+                            method: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function (response) {
+                                table.ajax.reload();
+                                Swal.fire(
+                                    'Terhapus!',
+                                    'Data berhasil dihapus.',
+                                    'success'
+                                );
+                            },
+                            error: function (error) {
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Terjadi kesalahan saat menghapus data.',
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

@@ -1,201 +1,211 @@
 @extends('partials.dashboardLayout')
 
 @section('content')
+
 <div class="container-fluid py-4">
     <div class="card">
         <div class="card-header pb-0 p-3">
             <div class="row">
                 <div class="col-6 d-flex align-items-center">
-                    <h5 class="mb-0">Detail Alur</h5>
+                    <h5 class="mb-0">Detail Alur / {{ $namaAplikasi }}</h5>
+                    <h5 class="mb-0"></h5>
                 </div>
-                <div class="col-6 text-end">
-                    <button class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" data-bs-target="#createModal">
-                        <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Detail Alur
+                <div class="col-6 text-end align-items-center justify-content-end"> 
+                    <div class="d-inline-block w-auto position-relative">
+                        <i class="fas fa-search position-absolute search-icon"></i>
+                        <input type="text" id="customSearch" class="form-control d-inline" placeholder="Search...">
+                    </div>
+                    <button class="btn bg-gradient-dark mb-0 ms-2" id="addNewDetailAlurBtn" data-bs-toggle="modal" data-bs-target="#detailAlurModal">
+                        <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Detail Alur Baru
                     </button>
                 </div>
             </div>
         </div>
         <div class="card-body px-0 pb-2">
             <div class="table-responsive">
-                <table class="table align-items-center mb-0" id="dataTable">
-                    <thead>
-                        <tr>
-                            <th class="text-center">No</th>
-                            <th>Aplikasi</th>
-                            <th>Alur</th>
-                            <th>Keterangan Alur</th>
-                            <th class="text-center">Aksi</th>
-                        </tr>
-                    </thead>
+                <table class="table tabel align-items-center mb-0">
+                <thead>
+                            <tr>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Alur <i class="fas fa-sort"></i> </th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Keterangan Alur </th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Aksi </th>
+                            </tr>
+                        </thead>
                 </table>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Create Modal -->
-<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="createForm">
-                @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title">Tambah Detail Alur</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="aplikasi_id" class="form-label">Aplikasi</label>
-                        <select name="aplikasi_id" class="form-control" required>
-                            <option value="">Pilih Aplikasi</option>
-                        </select>
+    <!-- Modal Tambah/Edit -->
+    <div class="modal fade" id="detailAlurModal" tabindex="-1" aria-labelledby="detailAlurModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="detailAlurForm">
+                    @csrf
+                    <input type="hidden" id="detail_alur_id" name="detail_alur_id">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detailAlurModalLabel">Tambah Detail Alur</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="mb-3">
-                        <label for="alur_id" class="form-label">Alur</label>
-                        <select name="alur_id" class="form-control" required>
-                            <option value="">Pilih Alur</option>
-                            <!-- Options dynamically populated -->
-                        </select>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="aplikasi_id" class="form-label">Aplikasi</label>
+                            <input type="text" class="form-control" value="{{ $aplikasi->namaAplikasi }}" readonly>
+                            <input type="hidden" name="aplikasi_id" id="aplikasi_id" value="{{ $aplikasi->id }}">
+                            </div>
+                        <div class="mb-3">
+                            <label for="alur_id" class="form-label">Alur</label>
+                            <select name="alur_id" class="form-select" id="alur_id" required>
+                            <option value="" disabled selected>Pilih Alur</option>
+                                @foreach($alur as $al)
+                                    <option value="{{ $al->id }}">{{ $al->namaAlur }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="keterangan_alur" class="form-label">Keterangan Alur</label>
+                            <textarea name="keterangan_alur" id="keterangan_alur" class="form-control" required></textarea>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="keterangan_alur" class="form-label">Keterangan Alur</label>
-                        <textarea name="keterangan_alur" class="form-control" required></textarea>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Save</button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Add</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
+
 </div>
 
-<!-- Edit Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="editForm" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Detail Alur</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="edit_aplikasi_id" class="form-label">Aplikasi</label>
-                        <select name="aplikasi_id" class="form-control" required>
-                            <option value="">Pilih Aplikasi</option>
-                            <!-- Options dynamically populated -->
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_alur_id" class="form-label">Alur</label>
-                        <select name="alur_id" class="form-control" required>
-                            <option value="">Pilih Alur</option>
-                            <!-- Options dynamically populated -->
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_keterangan_alur" class="form-label">Keterangan Alur</label>
-                        <textarea name="keterangan_alur" class="form-control" required></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-info">Simpan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 @endsection
 
-@section('scripts')
-<script>
-$(document).ready(function () {
-    const table = $('#dataTable').DataTable({
+@push('scripts')
+<script type="text/javascript">
+    $(document).ready(function() {
+    $.fn.DataTable.ext.pager.numbers_length = 4;
+    var aplikasi_id = "{{ $aplikasi_id }}"; 
+
+    var table = $('.tabel').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('detailAlur.index') }}",
+        order: [],
+        lengthMenu: [5, 10, 25, 50, 100],
+        language: {
+            paginate: {
+                previous: '<span class="prev-icon page-link">‹</span>',
+                next: '<span class="next-icon page-link">›</span>',
+            },
+            search: ''
+        },
+        dom: 'lrtip',
+        ajax: {
+            url: "{{ route('manajemen-aplikasi.detailAlurData', ':id') }}".replace(':id', aplikasi_id),
+            type: "GET",
+        },
         columns: [
-            { data: 'id', className: 'text-center' },
-            { data: 'aplikasi.nama' },
-            { data: 'alur.nama' },
-            { data: 'keterangan_alur' },
-            { data: 'action', orderable: false, searchable: false, className: 'text-center' }
-        ]
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            { data: 'alur', name: 'alur', orderable: true, searchable: true },
+            { data: 'keterangan_alur', name: 'keterangan_alur', orderable: true },
+            { data: 'action', name: 'action', orderable: false, searchable: false },
+        ],
+        drawCallback: function(settings) {
+            $('.dataTables_paginate').find('span a.paginate_button').addClass('page-link');
+        }
     });
 
-    // Create Detail Alur
-    $('#createForm').on('submit', function (e) {
+    $('#customSearch').on('keyup', function() {
+        table.search(this.value).draw();
+    });
+
+    $('#addNewDetailAlurBtn').click(function() {
+        $('#detailAlurModalLabel').text('Tambah Detail Alur');
+        $('#detailAlurForm')[0].reset();
+        $('#detail_alur_id').val('');
+        $('#aplikasi_id').val(aplikasi_id).prop('disabled', true);
+        $('#detailAlurModal').modal('show');
+    });
+
+    $('#detailAlurForm').submit(function(e) {
         e.preventDefault();
+        var id = $('#detail_alur_id').val();
+        var url = id ? '{{ route("detailAlur.update", ":id") }}'.replace(':id', id) : '{{ route("detailAlur.store") }}';
+        var method = id ? 'PUT' : 'POST';
+        $('#aplikasi_id').prop('disabled', false);
+
         $.ajax({
-            url: '{{ route('detailAlur.store') }}',
-            method: 'POST',
+            url: url,
+            method: method,
             data: $(this).serialize(),
-            success: function (response) {
-                $('#createModal').modal('hide');
-                $('#createForm')[0].reset();
+            success: function(response) {
+                console.log('Response dari server:', response);
+                $('#detailAlurModal').modal('hide');
                 table.ajax.reload();
-                alert(response.success);
+                toastr.success(response.success);
             },
-            error: function (xhr) {
-                alert('Something went wrong!');
+            error: function() {
+                toastr.error('Terjadi kesalahan.');
             }
         });
     });
 
-    // Delete Detail Alur
-    $(document).on('click', '.delete', function () {
-        const id = $(this).data('id');
-        if (confirm('Are you sure you want to delete this detail alur?')) {
-            $.ajax({
-                url: `/detailAlur/${id}`,
-                method: 'DELETE',
-                data: { _token: '{{ csrf_token() }}' },
-                success: function (response) {
-                    table.ajax.reload();
-                    alert(response.success);
-                },
-                error: function () {
-                    alert('Something went wrong!');
-                }
-            });
-        }
+    $(document).on('click', '.edit', function() {
+        var id = $(this).data('id');
+        var aplikasi_id = $(this).data('aplikasi_id');
+        var alur_id = $(this).data('alur_id');
+        var keterangan_alur = $(this).data('keterangan_alur');
+
+    console.log('Edit Data:', alur_id, keterangan_alur);
+
+        $('#detailAlurModalLabel').text('Edit Detail Alur');
+        $('#detail_alur_id').val(id);
+        $('#aplikasi_id').val(aplikasi_id).prop('disabled', true); 
+        $('#alur_id').val(alur_id);
+        $('#keterangan_alur').val(keterangan_alur);
+        $('#detailAlurModal').modal('show');
     });
 
-    // Open and populate Edit Modal
-    $(document).on('click', '.edit', function () {
-        const id = $(this).data('id');
-        $.get(`/detailAlur/${id}/edit`, function (data) {
-            $('#editForm [name="aplikasi_id"]').val(data.aplikasi_id);
-            $('#editForm [name="alur_id"]').val(data.alur_id);
-            $('#editForm [name="keterangan_alur"]').val(data.keterangan_alur);
-            $('#editForm').attr('data-id', id);
-            $('#editModal').modal('show');
-        });
-    });
-
-    // Update Detail Alur
-    $('#editForm').on('submit', function (e) {
-        e.preventDefault();
-        const id = $(this).data('id');
-        $.ajax({
-            url: `/detailAlur/${id}`,
-            method: 'PUT',
-            data: $(this).serialize(),
-            success: function (response) {
-                $('#editModal').modal('hide');
-                table.ajax.reload();
-                alert(response.success);
-            },
-            error: function () {
-                alert('Something went wrong!');
+    // Saat menekan tombol Delete
+    $(document).on('click', '.delete', function() {
+        var id = $(this).data('id');
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#388da8',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '{{ route("detailAlur.destroy", ":id") }}'.replace(':id', id),
+                    method: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function() {
+                        table.ajax.reload();
+                        Swal.fire(
+                            'Terhapus!',
+                            'Data berhasil dihapus.',
+                            'success'
+                        );
+                    },
+                    error: function() {
+                        Swal.fire(
+                            'Gagal!',
+                            'Terjadi kesalahan saat menghapus data.',
+                            'error'
+                        );
+                    }
+                });
             }
         });
     });
 });
+
 </script>
-@endsection
+@endpush

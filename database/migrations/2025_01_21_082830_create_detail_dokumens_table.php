@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::create('detail_dokumens', function (Blueprint $table) {
             $table->id();
             $table->string('namaDokumen', 255);
-            $table->string('file');
+            $table->file('file');
             $table->foreignIdFor(Aplikasi::class);
             $table->foreignIdFor(Dokumen::class);
             $table->integer('noSurat');

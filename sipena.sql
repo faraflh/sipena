@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 22, 2025 at 08:44 AM
+-- Generation Time: Jan 26, 2025 at 08:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,8 +39,17 @@ CREATE TABLE `alurs` (
 --
 
 INSERT INTO `alurs` (`id`, `namaAlur`, `created_at`, `updated_at`) VALUES
-(3, 'Pengembangan', '2025-01-20 18:06:30', '2025-01-20 20:35:04'),
-(4, 'Permohonan', '2025-01-20 20:34:57', '2025-01-20 20:34:57');
+(4, 'PPTK', '2025-01-20 20:34:57', '2025-01-24 00:50:36'),
+(7, 'bendahara', '2025-01-23 05:46:12', '2025-01-23 05:46:12'),
+(8, 'kkv', '2025-01-23 05:46:17', '2025-01-23 05:46:17'),
+(9, 'Permohonan', '2025-01-23 05:46:24', '2025-01-23 05:46:24'),
+(10, 'g', '2025-01-23 05:46:30', '2025-01-23 05:46:30'),
+(11, 'bendahara', '2025-01-23 05:46:33', '2025-01-24 01:37:08'),
+(12, 'ror', '2025-01-23 05:46:37', '2025-01-23 05:46:37'),
+(13, 'hm', '2025-01-23 05:46:43', '2025-01-23 05:46:43'),
+(14, 'rawr', '2025-01-23 05:51:16', '2025-01-23 05:51:16'),
+(15, 'kkv', '2025-01-24 00:09:53', '2025-01-24 00:09:53'),
+(16, 'hm', '2025-01-24 01:38:52', '2025-01-24 01:38:52');
 
 -- --------------------------------------------------------
 
@@ -52,14 +61,21 @@ CREATE TABLE `aplikasis` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `namaAplikasi` varchar(255) NOT NULL,
   `keterangan` varchar(255) NOT NULL,
-  `detail_tim_id` bigint(20) UNSIGNED NOT NULL,
-  `detail_dokumen_id` bigint(20) UNSIGNED NOT NULL,
-  `alur_id` bigint(20) UNSIGNED NOT NULL,
+  `detail_tim_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `detail_dokumen_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `detail_alur_id` bigint(20) UNSIGNED DEFAULT NULL,
   `url` varchar(255) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `status` varchar(30) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `aplikasis`
+--
+
+INSERT INTO `aplikasis` (`id`, `namaAplikasi`, `keterangan`, `detail_tim_id`, `detail_dokumen_id`, `detail_alur_id`, `url`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'meow', 'sistem informaso', NULL, NULL, NULL, 'electronicfuns.com', 'nonaktif', '2025-01-25 22:04:11', '2025-01-25 22:04:28');
 
 -- --------------------------------------------------------
 
@@ -288,7 +304,8 @@ CREATE TABLE `kategoris` (
 --
 
 INSERT INTO `kategoris` (`id`, `namaKategori`, `created_at`, `updated_at`) VALUES
-(1, 'aplikasi', '2025-01-19 08:07:19', '2025-01-19 08:07:19');
+(1, 'aplikasi', '2025-01-19 08:07:19', '2025-01-19 08:07:19'),
+(2, 'kegiatan', '2025-01-24 00:45:51', '2025-01-24 00:45:51');
 
 -- --------------------------------------------------------
 
@@ -336,11 +353,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (15, '2014_10_12_000000_create_users_table', 2),
 (16, '2025_01_15_054902_create_jabatan_kegiatans_table', 3),
 (19, '2025_01_21_082645_create_kegiatans_table', 5),
-(20, '2025_01_21_082738_create_aplikasis_table', 6),
 (21, '2025_01_21_082807_create_detail_tims_table', 6),
 (22, '2025_01_21_082830_create_detail_dokumens_table', 7),
 (23, '2025_01_21_084338_create_detail_alurs_table', 7),
-(24, '2025_01_13_084444_create_permohonans_table', 8);
+(24, '2025_01_13_084444_create_permohonans_table', 8),
+(26, '2025_01_21_082738_create_aplikasis_table', 9);
 
 -- --------------------------------------------------------
 
@@ -592,13 +609,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `alurs`
 --
 ALTER TABLE `alurs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `aplikasis`
 --
 ALTER TABLE `aplikasis`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `detail_alurs`
@@ -664,7 +681,7 @@ ALTER TABLE `jabatan_statuses`
 -- AUTO_INCREMENT for table `kategoris`
 --
 ALTER TABLE `kategoris`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `kegiatans`
@@ -676,7 +693,7 @@ ALTER TABLE `kegiatans`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `pegawais`

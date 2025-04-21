@@ -39,4 +39,8 @@ class Pegawai extends Model
     {
         return $this->hasOne(User::class);
     }
+    public function detailTim()
+    {
+        return $this->hasMany(DetailTim::class);
+    }
 }

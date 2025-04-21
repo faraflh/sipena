@@ -70,6 +70,8 @@
 @section('scripts')
 <script>
 $(document).ready(function () {
+    $.fn.DataTable.ext.pager.numbers_length = 4;
+
     // Initialize DataTable
     const table = $('#kegiatansTable').DataTable({
         processing: true,

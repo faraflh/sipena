@@ -192,7 +192,7 @@
 <script src="{{ asset('main_assets/vendor/aos/aos.js') }}"></script>
 <script src="{{ asset('main_assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
 <script src="{{ asset('main_assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
-<script src="{{ url('https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs') }}"></script>
+<script type="module" src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"></script>
 
 <!-- Main JS File -->
 <script src="{{ asset('main_assets/js/main.js') }}"></script>

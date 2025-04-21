@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Alur;
+use App\Models\DetailAlur;
 use App\Models\DetailDokumen;
 use App\Models\DetailTim;
 use Illuminate\Database\Migrations\Migration;
@@ -18,11 +18,11 @@ return new class extends Migration
             $table->id();
             $table->string('namaAplikasi', 255);
             $table->string('keterangan', 255);
-            $table->foreignIdFor(DetailTim::class);
-            $table->foreignIdFor(DetailDokumen::class);
-            $table->foreignIdFor(Alur::class);
+            $table->foreignIdFor(DetailTim::class)->nullable();
+            $table->foreignIdFor(DetailDokumen::class)->nullable();
+            $table->foreignIdFor(DetailAlur::class)->nullable();
             $table->string('url', length: 255);
-            $table->boolean('status')->default(true);
+            $table->string('status', 30);
             $table->timestamps();
         });
     }

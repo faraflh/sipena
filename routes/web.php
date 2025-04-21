@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\AlurController;
+use App\Http\Controllers\AplikasiController;
 use App\Http\Controllers\DetailAlurController;
+use App\Http\Controllers\DetailDokumenController;
+use App\Http\Controllers\DetailTimController;
 use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\DpaController;
@@ -30,23 +33,44 @@ Route::get('/permohonan', function () {
     return view('permohonan');
 });
 
-//Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
-// Route::get('/jabatan-kegiatan', function () {return view('dashboard');})->name('jabatan-kegiatan');
+
+Route::get('/manajemen-aplikasi/{id}/dokumen', [AplikasiController::class, 'detailDokumen'])
+->name('manajemen-aplikasi.detailDokumen');
+
+Route::get('/manajemen-aplikasi/{id}/detail-dokumen/data', [AplikasiController::class, 'detailDokumenData'])
+    ->name('manajemen-aplikasi.detailDokumenData');
+
+Route::get('/manajemen-aplikasi/{id}/detail-alur', [AplikasiController::class, 'detailAlur'])
+    ->name('manajemen-aplikasi.detailAlur');
+
+Route::get('/manajemen-aplikasi/{id}/detail-alur/data', [AplikasiController::class, 'detailAlurData'])
+    ->name('manajemen-aplikasi.detailAlurData');
+
+Route::get('/manajemen-aplikasi/{id}/tim', [AplikasiController::class, 'detailTim'])
+    ->name('manajemen-aplikasi.detailTim');
+
+Route::get('/manajemen-aplikasi/{id}/detail-tim/data', [AplikasiController::class, 'detailTimData'])
+    ->name('manajemen-aplikasi.detailTimData');
+
 Route::get('/manajemen-aplikasi', function () {return view('dashboard');})->name('manajemen-aplikasi');
 Route::get('/manajemen-administrasi', function () {return view('dashboard');})->name('manajemen-administrasi');
 Route::get('/settings', function () {return view('dashboard');})->name('settings');
-Route::resource('pegawai', PegawaiController::class);
-Route::resource('alur', AlurController::class);
 Route::resource('dpa', DpaController::class);
 Route::resource('kategori', KategoriController::class);
+
 Route::resource('dokumen', DokumenController::class);
+Route::get('/dokumen/dropdown-data', [DokumenController::class, 'getDropdownData'])->name('dokumen.dropdownData');
+
 Route::resource('jabatanStatus', JabatanStatusController::class);
 Route::resource('jabatanKegiatan', JabatanKegiatanController::class);
+Route::resource('pegawai', PegawaiController::class);
+Route::resource('alur', AlurController::class);
 Route::resource('permohonans', PermohonansController::class);
 Route::resource('kegiatan', KegiatanController::class);
-Route::prefix('manajemen-aplikasi')->group(function () {
-    Route::resource('detailAlur', DetailAlurController::class);
-});
+Route::resource('manajemen-aplikasi', AplikasiController::class);
+Route::resource('detailAlur', DetailAlurController::class);
+Route::resource('detailTim', DetailTimController::class);
+Route::resource('detailDokumen', DetailDokumenController::class);
 
 Route::prefix('manajemen-aplikasi')->as('manajemen-aplikasi.')->group(function () {
     Route::resource('kegiatan', KegiatanController::class);

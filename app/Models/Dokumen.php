@@ -24,4 +24,9 @@ class Dokumen extends Model
     {
         return $this->belongsTo(Alur::class);
     }
+
+    public function dokumen()
+    {
+        return $this->hasMany(DetailDokumen::class);
+    }
 }

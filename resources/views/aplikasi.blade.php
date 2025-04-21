@@ -7,70 +7,70 @@
             <div class="card-header pb-0 p-3">
                 <div class="row">
                     <div class="col-6 d-flex align-items-center">
-                        <h5 class="mb-0">Dokumen</h5>
+                        <h5 class="mb-0">Manajemen Aplikasi</h5>
                     </div>
-                    <div class="col-6 d-flex align-items-center justify-content-end flex-nowrap"> 
+                    <div class="col-6 text-end d-flex align-items-center justify-content-end flex-nowrap"> 
                         <div class="d-inline-block w-auto position-relative">
                             <i class="fas fa-search position-absolute search-icon"></i>
                             <input type="text" id="customSearch" class="form-control d-inline border-start-0" placeholder="Search...">
                         </div>
-                        <button class="btn bg-gradient-dark mb-0 ms-2" data-bs-toggle="modal" id="addNewDocBtn" data-bs-target="#createModal">
-                           <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Dokumen Baru
+                        <button class="btn bg-gradient-dark mb-0 ms-2" data-bs-toggle="modal" id="addNewAplikasiBtn" data-bs-target="#createModal">
+                           <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Aplikasi Baru
                         </button>
                     </div>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">
                 <div class="table-responsive">
-                    <table class="table tabel align-items-center mb-0">
-                        <thead>
-                            <tr>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Kategori <i class="fas fa-sort"></i> </th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Alur <i class="fas fa-sort"></i> </th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Jenis Dokumen <i class="fas fa-sort"></i> </th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Aksi </th>
-                            </tr>
-                        </thead>
-                    </table>
+                <table class="table tabel align-items-center mb-0">
+                    <thead>
+                        <tr>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Aplikasi <i class="fas fa-sort"></i> </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kelola Tim</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kelola Dokumen</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kelola Alur</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                        </tr>
+                    </thead>
+                </table>
                 </div>
             </div>
         </div>
 
      <!-- Create Modal -->
-     <div class="modal fade" id="dokumenModal" tabindex="-1" aria-labelledby="dokumenModalLabel" aria-hidden="true">
+     <div class="modal fade" id="aplikasiModal" tabindex="-1" aria-labelledby="aplikasiModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="dokumenForm">
+                <form id="aplikasiForm">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="dokumenModalLabel">Tambah Dokumen</h5>
+                        <h5 class="modal-title" id="aplikasiModalLabel">Tambah Aplikasi</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="kategori_id" class="form-label">Kategori</label>
-                            <select name="kategori_id" class="form-control" id="kategori_id" required>
-                                <option value="">Pilih Kategori</option>
-                                @foreach($kategori as $kat)
-                                    <option value="{{ $kat->id }}" >{{ $kat->namaKategori }}</option>
-                                @endforeach
-                            </select>
+                            <label for="namaAplikasi" class="form-label">Nama Aplikasi</label>
+                            <input type="text" name="namaAplikasi" class="form-control" id="namaAplikasi" required>
+                            <input type="hidden" name="aplikasi_id" id="aplikasi_id">
                         </div>
                         <div class="mb-3">
-                            <label for="alur_id" class="form-label">Alur</label>
-                            <select name="alur_id" class="form-control" id="alur_id" required>
-                                <option value="">Pilih Alur</option>
-                                @foreach($alur as $al)
-                                    <option value="{{ $al->id }}">{{ $al->namaAlur }}</option>
-                                @endforeach
-                            </select>
+                            <label for="keterangan" class="form-label">Keterangan</label>
+                            <input type="text" name="keterangan" class="form-control" id="keterangan" required>
                         </div>
                         <div class="mb-3">
-                            <label for="jenisDokumen" class="form-label">Jenis Dokumen</label>
-                            <input type="text" name="jenisDokumen" class="form-control" id="jenisDokumen" required>
+                            <label for="url" class="form-label">URL</label>
+                            <input type="text" name="url" class="form-control" id="url" required>
+                       </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-select" required>
+                                <option value="aktif">Aktif</option>
+                                <option value="nonaktif">Tidak Aktif</option>
+                            </select>
                         </div>
-                        </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">Save</button>
@@ -87,7 +87,6 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $.fn.DataTable.ext.pager.numbers_length = 4;
-
             var table = $('.tabel').DataTable({
                 processing: true,
                 serverSide: true,
@@ -100,12 +99,14 @@
                     search: ''
                 },
                 dom: 'lrtip',
-                ajax: "{{ route('dokumen.index') }}",
+                ajax: "{{ route('manajemen-aplikasi.index') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'kategori', name: 'kategori', orderable: true},
-                    {data: 'alur', name: 'alur', orderable: true},
-                    {data: 'jenisDokumen', name: 'jenisDokumen', orderable: true},
+                    {data: 'namaAplikasi', name: 'namaAplikasi', orderable: true},
+                    {data: 'keterangan', name: 'keterangan'},
+                    {data: 'kelola_tim', name: 'kelola_tim', orderable: false, searchable: false},
+                    {data: 'kelola_dokumen', name: 'kelola_dokumen', orderable: false, searchable: false},
+                    {data: 'kelola_alur', name: 'kelola_alur', orderable: false, searchable: false},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 drawCallback: function(settings) {
@@ -117,28 +118,30 @@
                 table.search(this.value).draw();
             });
 
-            $('#addNewDocBtn').click(function () {
-                $('#dokumenModalLabel').text('Tambah Dokumen');
-                $('#dokumenForm')[0].reset();
-                $('#dokumen_id').val('');
-                $('#dokumenModal').modal('show');
+            $('#addNewAplikasiBtn').click(function () {
+                $('#aplikasiModalLabel').text('Tambah Aplikasi');
+                $('#aplikasiForm')[0].reset();
+                $('#aplikasi_id').val('');
+                $('#aplikasiModal').modal('show');
             });
 
-            $('#dokumenForm').submit(function (e) {
+            $('#aplikasiForm').submit(function (e) {
                 e.preventDefault();
-                var id = $('#dokumen_id').val();
-                var url = id ? '{{ route("dokumen.update", ":id") }}'.replace(':id', id) : '{{ route("dokumen.store") }}';
+                console.log($(this).serialize());
+                var id = $('#aplikasi_id').val();
+                var url = id ? '{{ route("manajemen-aplikasi.update", ":id") }}'.replace(':id', id) : '{{ route("manajemen-aplikasi.store") }}';
                 var method = id ? 'PUT' : 'POST';
                 $.ajax({
                     url: url,
                     method: method,
                     data: $(this).serialize(),
                     success: function (response) {
-                        $('#dokumenModal').modal('hide');
+                        $('#aplikasiModal').modal('hide');
                         table.ajax.reload();
                         toastr.success(response.success);
                     },
                     error: function (error) {
+                        console.log(error.responseJSON);
                         toastr.error('Something went wrong!');
                     }
                 });
@@ -146,16 +149,17 @@
 
             $(document).on('click', '.edit', function () {
                 var id = $(this).data('id');
-                var kategori_id = $(this).data('kategori_id');
-                var alur_id = $(this).data('alur_id');
-                var jenisDokumen = $(this).data('jenisdokumen');
-
-                $('#dokumenModalLabel').text('Edit Dokumen');
-                $('#dokumen_id').val(id);
-                $('#kategori_id').val(kategori_id);
-                $('#alur_id').val(alur_id);
-                $('#jenisDokumen').val(jenisDokumen);
-                $('#dokumenModal').modal('show');
+                var namaAplikasi = $(this).data('namaaplikasi');
+                var keterangan = $(this).data('keterangan');
+                var url = $(this).data('url');
+                var status = $(this).data('status');
+                $('#aplikasiModalLabel').text('Edit Aplikasi');
+                $('#aplikasi_id').val(id);
+                $('#namaAplikasi').val(namaAplikasi);
+                $('#keterangan').val(keterangan);
+                $('#url').val(url);
+                $('#status').val(status);
+                $('#aplikasiModal').modal('show');
             });
 
             $(document).on('click', '.delete', function () {
@@ -172,7 +176,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '{{ route("dokumen.destroy", ":id") }}'.replace(':id', id),
+                            url: '{{ route("manajemen-aplikasi.destroy", ":id") }}'.replace(':id', id),
                             method: 'DELETE',
                             data: {
                                 _token: '{{ csrf_token() }}'
